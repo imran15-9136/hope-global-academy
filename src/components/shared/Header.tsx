@@ -20,18 +20,21 @@ export function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-          <a href="#destinations" className="transition-colors hover:text-primary">
+          <Link href="/#destinations" className="transition-colors hover:text-primary">
             Destinations
-          </a>
-          <a href="#courses" className="transition-colors hover:text-primary">
+          </Link>
+          <Link href="/#courses" className="transition-colors hover:text-primary">
             Courses
-          </a>
-          <a href="#institutes" className="transition-colors hover:text-primary">
+          </Link>
+          <Link href="/#institutes" className="transition-colors hover:text-primary">
             Institutes
-          </a>
-          <a href="#appointment" className="transition-colors hover:text-primary">
+          </Link>
+          <Link href="/blog" className="transition-colors hover:text-primary">
+            Blog
+          </Link>
+          <Link href="/#appointment" className="transition-colors hover:text-primary">
             Contact
-          </a>
+          </Link>
         </nav>
 
         <div className="flex items-center gap-3">
@@ -51,14 +54,15 @@ export function Header() {
             <span>Application CRM</span>
             <ExternalLink className="h-3.5 w-3.5 text-primary" />
           </a>
-          <a
-            href="#appointment"
+          <Link
+            href="/consultation"
             className="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm transition-all hover:bg-accent-hover hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             Book Appointment
-          </a>
+          </Link>
         </div>
       </div>
     </header>
   );
 }
+

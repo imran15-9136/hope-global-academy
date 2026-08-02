@@ -28,14 +28,15 @@ export function BlogManager({ initialBlogs }: { initialBlogs: any[] }) {
     });
 
     if (res.success) {
-      alert("Blog post published!");
+      if (res.data) {
+        setBlogs((prev) => [res.data, ...prev]);
+      }
       setShowModal(false);
       setTitle("");
       setSlug("");
       setExcerpt("");
       setContent("");
       setCoverImage("");
-      window.location.reload();
     } else {
       alert(res.message);
     }

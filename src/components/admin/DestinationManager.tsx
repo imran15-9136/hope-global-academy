@@ -31,7 +31,9 @@ export function DestinationManager({ initialDestinations }: { initialDestination
     });
 
     if (res.success) {
-      alert("Destination created!");
+      if (res.data) {
+        setDestinations((prev) => [res.data, ...prev]);
+      }
       setShowModal(false);
       setName("");
       setSlug("");
@@ -39,7 +41,6 @@ export function DestinationManager({ initialDestinations }: { initialDestination
       setTuitionRange("");
       setIntake("");
       setShortDescription("");
-      window.location.reload();
     } else {
       alert(res.message);
     }

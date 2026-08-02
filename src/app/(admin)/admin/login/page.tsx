@@ -97,6 +97,18 @@ export default function AdminLoginPage() {
             {loading ? "Signing in..." : "Sign In to Admin Panel"}
           </button>
         </form>
+
+        <div className="pt-4 border-t border-slate-100 text-center text-xs text-slate-500">
+          <span>Developed by: </span>
+          <a
+            href="https://innovtec.it.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-blue-600 hover:underline transition-colors"
+          >
+            Innovtec
+          </a>
+        </div>
       </div>
     </div>
   );

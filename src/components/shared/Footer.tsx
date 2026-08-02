@@ -30,10 +30,10 @@ export function Footer() {
               Destinations
             </h3>
             <ul className="mt-4 space-y-2 text-sm text-slate-400">
-              <li><a href="#destinations" className="hover:text-amber-400 transition-colors">Study in UK</a></li>
-              <li><a href="#destinations" className="hover:text-amber-400 transition-colors">Study in USA</a></li>
-              <li><a href="#destinations" className="hover:text-amber-400 transition-colors">Study in Australia</a></li>
-              <li><a href="#destinations" className="hover:text-amber-400 transition-colors">Study in Canada</a></li>
+              <li><Link href="/study-in/uk" className="hover:text-amber-400 transition-colors">Study in UK</Link></li>
+              <li><Link href="/study-in/usa" className="hover:text-amber-400 transition-colors">Study in USA</Link></li>
+              <li><Link href="/study-in/australia" className="hover:text-amber-400 transition-colors">Study in Australia</Link></li>
+              <li><Link href="/study-in/canada" className="hover:text-amber-400 transition-colors">Study in Canada</Link></li>
             </ul>
           </div>
 
@@ -42,8 +42,8 @@ export function Footer() {
               Portals & Services
             </h3>
             <ul className="mt-4 space-y-2 text-sm text-slate-400">
-              <li><a href="#courses" className="hover:text-amber-400 transition-colors">Undergraduate & Masters</a></li>
-              <li><a href="#appointment" className="hover:text-amber-400 transition-colors">Free Counseling</a></li>
+              <li><Link href="/#courses" className="hover:text-amber-400 transition-colors">Undergraduate & Masters</Link></li>
+              <li><Link href="/consultation" className="hover:text-amber-400 transition-colors">Free Counseling</Link></li>
               <li>
                 <a
                   href="https://innovcrm.hopeglobalacademy.co.uk/auth/login"

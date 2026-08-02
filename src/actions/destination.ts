@@ -40,7 +40,7 @@ export async function createDestination(formData: {
       return { success: false, message: "A destination with this slug already exists." };
     }
 
-    await Destination.create({
+    const createdDest = await Destination.create({
       name: formData.name,
       slug: formData.slug.toLowerCase().trim(),
       shortDescription: formData.shortDescription || "",
@@ -55,7 +55,11 @@ export async function createDestination(formData: {
     revalidatePath("/admin/destinations");
     revalidatePath("/");
 
-    return { success: true, message: "Destination created successfully." };
+    return {
+      success: true,
+      message: "Destination created successfully.",
+      data: JSON.parse(JSON.stringify(createdDest)),
+    };
   } catch (error) {
     console.error("Error creating destination:", error);
     return { success: false, message: "Failed to create destination." };

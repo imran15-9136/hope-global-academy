@@ -40,7 +40,7 @@ export async function createBlog(formData: {
       return { success: false, message: "A blog post with this slug already exists." };
     }
 
-    await Blog.create({
+    const createdBlog = await Blog.create({
       title: formData.title,
       slug: formData.slug.toLowerCase().trim(),
       excerpt: formData.excerpt || "",
@@ -55,7 +55,11 @@ export async function createBlog(formData: {
     revalidatePath("/admin/blogs");
     revalidatePath("/blog");
 
-    return { success: true, message: "Blog post published successfully." };
+    return {
+      success: true,
+      message: "Blog post published successfully.",
+      data: JSON.parse(JSON.stringify(createdBlog)),
+    };
   } catch (error) {
     console.error("Error creating blog:", error);
     return { success: false, message: "Failed to create blog post." };
