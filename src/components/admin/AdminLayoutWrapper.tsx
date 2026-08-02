@@ -29,7 +29,7 @@ export function AdminLayoutWrapper({ children }: { children: React.ReactNode }) 
                 href="https://innovtec.it.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:underline hover:text-slate-800 transition-colors"
+                className="font-semibold text-blue-600 hover:underline transition-colors"
               >
                 Innovtec
               </a>

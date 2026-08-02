@@ -70,7 +70,7 @@ export function AdminSidebar() {
             href="https://innovtec.it.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:underline hover:text-slate-400 transition-colors"
+            className="font-medium text-amber-400 hover:underline transition-colors"
           >
             Innovtec
           </a>
