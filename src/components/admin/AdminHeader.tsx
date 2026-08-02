@@ -9,7 +9,7 @@ export function AdminHeader() {
 
   return (
     <header className="h-16 border-b border-slate-200 bg-white px-6 flex items-center justify-between shadow-sm">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <Link
           href="/"
           target="_blank"
@@ -18,6 +18,15 @@ export function AdminHeader() {
           <span>View Live Site</span>
           <ExternalLink className="h-3.5 w-3.5" />
         </Link>
+        <a
+          href="https://innovcrm.hopeglobalacademy.co.uk/auth/login"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors border border-blue-200 rounded-md px-3 py-1.5"
+        >
+          <span>Application CRM</span>
+          <ExternalLink className="h-3.5 w-3.5" />
+        </a>
       </div>
 
       <div className="flex items-center gap-4">

@@ -39,13 +39,21 @@ export function Footer() {
 
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white">
-              Course Levels
+              Portals & Services
             </h3>
             <ul className="mt-4 space-y-2 text-sm text-slate-400">
-              <li><a href="#courses" className="hover:text-amber-400 transition-colors">Undergraduate Degrees</a></li>
-              <li><a href="#courses" className="hover:text-amber-400 transition-colors">Postgraduate / Masters</a></li>
-              <li><a href="#courses" className="hover:text-amber-400 transition-colors">Diplomas & HND</a></li>
-              <li><a href="#courses" className="hover:text-amber-400 transition-colors">Foundation Courses</a></li>
+              <li><a href="#courses" className="hover:text-amber-400 transition-colors">Undergraduate & Masters</a></li>
+              <li><a href="#appointment" className="hover:text-amber-400 transition-colors">Free Counseling</a></li>
+              <li>
+                <a
+                  href="https://innovcrm.hopeglobalacademy.co.uk/auth/login"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-amber-400 font-medium hover:underline transition-colors"
+                >
+                  <span>Application CRM Login</span>
+                </a>
+              </li>
             </ul>
           </div>
 

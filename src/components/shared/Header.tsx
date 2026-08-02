@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GraduationCap, Phone } from "lucide-react";
+import { GraduationCap, Phone, ExternalLink } from "lucide-react";
 
 export function Header() {
   return (
@@ -37,14 +37,23 @@ export function Header() {
         <div className="flex items-center gap-3">
           <a
             href="tel:+8801700000000"
-            className="hidden lg:flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-primary transition-colors"
+            className="hidden xl:flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-primary transition-colors"
           >
             <Phone className="h-4 w-4 text-primary" />
             <span>+880 1700-000000</span>
           </a>
           <a
+            href="https://innovcrm.hopeglobalacademy.co.uk/auth/login"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-lg border border-slate-300 px-3.5 py-2 text-xs font-semibold text-slate-700 hover:border-primary hover:text-primary transition-all hover:bg-slate-50"
+          >
+            <span>Application CRM</span>
+            <ExternalLink className="h-3.5 w-3.5 text-primary" />
+          </a>
+          <a
             href="#appointment"
-            className="rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-slate-900 shadow-sm transition-all hover:bg-accent-hover hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm transition-all hover:bg-accent-hover hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             Book Appointment
           </a>
