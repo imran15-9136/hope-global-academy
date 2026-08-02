@@ -70,9 +70,23 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} Hope Global Academy. All rights reserved.</p>
-          <div className="flex gap-6 mt-4 sm:mt-0">
+        <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+            <p>© {new Date().getFullYear()} Hope Global Academy. All rights reserved.</p>
+            <span className="hidden sm:inline text-slate-700">|</span>
+            <p className="text-slate-400">
+              Developed by:{" "}
+              <a
+                href="https://innovtec.it.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-amber-400 hover:underline transition-colors"
+              >
+                Innovtec
+              </a>
+            </p>
+          </div>
+          <div className="flex gap-6">
             <a href="#" className="hover:text-slate-400 transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-slate-400 transition-colors">Terms of Service</a>
             <a href="#" className="hover:text-slate-400 transition-colors">Sitemap</a>

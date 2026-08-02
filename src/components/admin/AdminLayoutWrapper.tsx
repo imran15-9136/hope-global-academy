@@ -20,6 +20,20 @@ export function AdminLayoutWrapper({ children }: { children: React.ReactNode }) 
         <div className="flex-1 flex flex-col min-w-0">
           <AdminHeader />
           <main className="flex-1 p-6 md:p-8 max-w-7xl w-full mx-auto">{children}</main>
+          <footer className="py-3 px-6 border-t border-slate-200 bg-white text-center text-xs text-slate-500">
+            <span>© {new Date().getFullYear()} Hope Global Academy. </span>
+            <span>
+              Developed by:{" "}
+              <a
+                href="https://innovtec.it.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-blue-600 hover:underline transition-colors"
+              >
+                Innovtec
+              </a>
+            </span>
+          </footer>
         </div>
       </div>
     </SessionProviderWrapper>

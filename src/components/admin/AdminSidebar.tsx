@@ -62,8 +62,19 @@ export function AdminSidebar() {
         </nav>
       </div>
 
-      <div className="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
-        Hope Global Academy v1.0
+      <div className="p-4 border-t border-slate-800 text-xs text-slate-500 text-center space-y-1">
+        <div>Hope Global Academy v1.0</div>
+        <div className="text-[11px] text-slate-400">
+          Developed by:{" "}
+          <a
+            href="https://innovtec.it.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-amber-400 hover:underline transition-colors"
+          >
+            Innovtec
+          </a>
+        </div>
       </div>
     </aside>
   );
