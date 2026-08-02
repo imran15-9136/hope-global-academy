@@ -11,8 +11,9 @@ interface DestinationItem {
   shortDescription?: string;
 }
 
-const defaultDestinations = [
+const defaultDestinations: DestinationItem[] = [
   {
+    _id: "default-uk",
     name: "United Kingdom",
     slug: "uk",
     image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=800&auto=format&fit=crop",
@@ -20,6 +21,7 @@ const defaultDestinations = [
     tuitionRange: "£12,000 - £25,000 / year",
   },
   {
+    _id: "default-usa",
     name: "United States",
     slug: "usa",
     image: "https://images.unsplash.com/photo-1485738422979-f5c462d49f74?q=80&w=800&auto=format&fit=crop",
@@ -27,6 +29,7 @@ const defaultDestinations = [
     tuitionRange: "$18,000 - $40,000 / year",
   },
   {
+    _id: "default-australia",
     name: "Australia",
     slug: "australia",
     image: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?q=80&w=800&auto=format&fit=crop",
@@ -34,6 +37,7 @@ const defaultDestinations = [
     tuitionRange: "AUD $20,000 - $38,000 / year",
   },
   {
+    _id: "default-canada",
     name: "Canada",
     slug: "canada",
     image: "https://images.unsplash.com/photo-1517935703635-27c737826572?q=80&w=800&auto=format&fit=crop",
@@ -43,7 +47,7 @@ const defaultDestinations = [
 ];
 
 export function Destinations({ initialDestinations }: { initialDestinations?: DestinationItem[] }) {
-  const displayDestinations =
+  const displayDestinations: DestinationItem[] =
     initialDestinations && initialDestinations.length > 0
       ? initialDestinations
       : defaultDestinations;

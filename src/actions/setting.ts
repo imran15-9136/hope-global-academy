@@ -8,20 +8,23 @@ import { auth } from "@/lib/auth";
 
 export async function getSettings() {
   await connectToDatabase();
-  let setting = await Setting.findOne().lean();
-  if (!setting) {
-    setting = await Setting.create({
-      siteName: "Hope Global Academy",
-      phone: "+880 1700-000000",
-      email: "info@hopeglobalacademy.com",
-      whatsapp: "+8801700000000",
-      heroTitle: "Your Global Future Starts At Hope Global",
-      heroSubtitle: "We guide ambitious students to study in top universities across the UK, USA, Australia, and Canada.",
-      visaSuccessRate: "98%",
-      studentsServed: "10,000+",
-    });
+  const existingSetting = await Setting.findOne().lean();
+  if (existingSetting) {
+    return JSON.parse(JSON.stringify(existingSetting));
   }
-  return JSON.parse(JSON.stringify(setting));
+
+  const newSetting = await Setting.create({
+    siteName: "Hope Global Academy",
+    phone: "+880 1700-000000",
+    email: "info@hopeglobalacademy.com",
+    whatsapp: "+8801700000000",
+    heroTitle: "Your Global Future Starts At Hope Global",
+    heroSubtitle: "We guide ambitious students to study in top universities across the UK, USA, Australia, and Canada.",
+    visaSuccessRate: "98%",
+    studentsServed: "10,000+",
+  });
+
+  return JSON.parse(JSON.stringify(newSetting));
 }
 
 export async function updateSettings(formData: {
