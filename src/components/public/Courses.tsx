@@ -57,7 +57,7 @@ export function Courses() {
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 text-primary">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-light text-primary">
                       <Icon className="h-6 w-6" />
                     </div>
                     <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">

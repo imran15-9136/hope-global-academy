@@ -56,7 +56,7 @@ export function Header() {
           </a>
           <Link
             href="/consultation"
-            className="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm transition-all hover:bg-accent-hover hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:bg-accent-hover hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             Book Appointment
           </Link>

@@ -104,7 +104,7 @@ export default function AdminLoginPage() {
             href="https://innovtec.it.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-semibold text-blue-600 hover:underline transition-colors"
+            className="font-semibold text-primary hover:underline transition-colors"
           >
             Innovtec
           </a>

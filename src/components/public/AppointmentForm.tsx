@@ -46,7 +46,7 @@ export function AppointmentForm() {
   };
 
   return (
-    <section id="appointment" className="py-20 bg-gradient-to-b from-white to-blue-50/40">
+    <section id="appointment" className="py-20 bg-gradient-to-b from-white to-primary-light/30">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 items-center">
           <div className="lg:col-span-5 space-y-6">
@@ -62,7 +62,7 @@ export function AppointmentForm() {
 
             <div className="space-y-4 pt-2">
               <div className="flex items-start gap-3">
-                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-100 text-primary mt-0.5">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary mt-0.5">
                   <CheckCircle2 className="h-4 w-4" />
                 </div>
                 <div>
@@ -72,7 +72,7 @@ export function AppointmentForm() {
               </div>
 
               <div className="flex items-start gap-3">
-                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-100 text-primary mt-0.5">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary mt-0.5">
                   <CheckCircle2 className="h-4 w-4" />
                 </div>
                 <div>
@@ -82,7 +82,7 @@ export function AppointmentForm() {
               </div>
 
               <div className="flex items-start gap-3">
-                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-100 text-primary mt-0.5">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary mt-0.5">
                   <CheckCircle2 className="h-4 w-4" />
                 </div>
                 <div>
@@ -224,7 +224,7 @@ export function AppointmentForm() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3 text-base font-bold text-slate-900 shadow-md transition-all hover:bg-accent-hover hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-70 mt-4"
+                    className="w-full flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3 text-base font-bold text-white shadow-md transition-all hover:bg-accent-hover hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-70 mt-4"
                   >
                     {loading ? (
                       <span>Scheduling...</span>

@@ -8,13 +8,13 @@
     --foreground: 222 47% 11%;
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
-    --primary: 221 83% 53%;
+    --primary: 220 81% 24%;
     --primary-foreground: 210 40% 98%;
-    --accent: 38 92% 50%;
-    --accent-foreground: 222 47% 11%;
+    --accent: 358 79% 49%;
+    --accent-foreground: 0 0% 100%;
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 221 83% 53%;
+    --ring: 220 81% 24%;
     --radius: 0.5rem;
   }
 }

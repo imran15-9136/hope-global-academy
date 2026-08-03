@@ -12,14 +12,14 @@ const config: Config = {
         background: "#f8fafc",
         foreground: "#0f172a",
         primary: {
-          DEFAULT: "#2563eb",
-          hover: "#1d4ed8",
-          light: "#dbe1ff",
+          DEFAULT: "#0b2b6b",
+          hover: "#082054",
+          light: "#e6ecf7",
         },
         accent: {
-          DEFAULT: "#f59e0b",
-          hover: "#d97706",
-          light: "#fef3c7",
+          DEFAULT: "#e31b23",
+          hover: "#c4141b",
+          light: "#fde8e9",
         },
         slate: {
           900: "#0f172a",

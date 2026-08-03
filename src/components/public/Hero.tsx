@@ -19,12 +19,12 @@ export function Hero({ settings }: HeroProps) {
     "We guide ambitious students to study in top universities across the UK, USA, Australia, and Canada. Get 100% free expert counseling, visa processing, and scholarship support.";
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/50 to-white py-16 lg:py-24">
+    <section className="relative overflow-hidden bg-gradient-to-b from-primary-light/40 to-white py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-3.5 py-1 text-xs font-semibold text-primary shadow-sm">
-              <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white px-3.5 py-1 text-xs font-semibold text-primary shadow-sm">
+              <Star className="h-3.5 w-3.5 fill-accent text-accent" />
               <span>Bangladesh's Most Trusted Education Consultancy</span>
             </div>
 
@@ -39,7 +39,7 @@ export function Hero({ settings }: HeroProps) {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
               <a
                 href="#appointment"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3.5 text-base font-semibold text-slate-900 shadow-md transition-all hover:bg-accent-hover hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3.5 text-base font-semibold text-white shadow-md transition-all hover:bg-accent-hover hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
                 Book Free Consultation
                 <ArrowRight className="h-5 w-5" />

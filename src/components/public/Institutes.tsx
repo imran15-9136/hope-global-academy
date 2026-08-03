@@ -16,7 +16,7 @@ export function Institutes() {
     <section id="institutes" className="py-20 bg-slate-900 text-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <h2 className="text-xs font-semibold uppercase tracking-wider text-amber-400">
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-accent">
             Global Partner Network
           </h2>
           <p className="text-3xl font-extrabold sm:text-4xl text-white">
@@ -31,14 +31,14 @@ export function Institutes() {
           {institutes.map((inst, idx) => (
             <div
               key={idx}
-              className="flex flex-col items-center justify-center rounded-xl border border-slate-800 bg-slate-800/50 p-6 text-center backdrop-blur-sm transition-all duration-300 hover:border-amber-500/50 hover:bg-slate-800"
+              className="flex flex-col items-center justify-center rounded-xl border border-slate-800 bg-slate-800/50 p-6 text-center backdrop-blur-sm transition-all duration-300 hover:border-accent/50 hover:bg-slate-800"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-700/60 text-amber-400 mb-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-700/60 text-accent mb-3">
                 <Building2 className="h-6 w-6" />
               </div>
               <h3 className="font-bold text-base text-white">{inst.name}</h3>
               <p className="mt-1 text-xs text-slate-400">{inst.country}</p>
-              <div className="mt-3 flex items-center gap-1 rounded-full bg-amber-400/10 px-2.5 py-0.5 text-[11px] font-semibold text-amber-400">
+              <div className="mt-3 flex items-center gap-1 rounded-full bg-accent/10 px-2.5 py-0.5 text-[11px] font-semibold text-accent">
                 <Award className="h-3 w-3" />
                 <span>{inst.ranking}</span>
               </div>

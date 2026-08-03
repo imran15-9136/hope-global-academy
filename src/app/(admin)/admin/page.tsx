@@ -32,9 +32,9 @@ export default async function AdminDashboardPage() {
         <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-card flex items-center justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">New Appointments</p>
-            <p className="text-3xl font-extrabold text-amber-500 mt-1">{newConsultations}</p>
+            <p className="text-3xl font-extrabold text-accent mt-1">{newConsultations}</p>
           </div>
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-amber-50 text-amber-500">
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent-light text-accent">
             <Users className="h-6 w-6" />
           </div>
         </div>
@@ -44,7 +44,7 @@ export default async function AdminDashboardPage() {
             <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Leads</p>
             <p className="text-3xl font-extrabold text-slate-900 mt-1">{totalConsultations}</p>
           </div>
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 text-primary">
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-light text-primary">
             <UserCheck className="h-6 w-6" />
           </div>
         </div>
@@ -112,9 +112,9 @@ export default async function AdminDashboardPage() {
                       <span
                         className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase ${
                           lead.status === "new"
-                            ? "bg-amber-100 text-amber-700"
+                            ? "bg-accent-light text-accent"
                             : lead.status === "contacted"
-                            ? "bg-blue-100 text-blue-700"
+                            ? "bg-primary-light text-primary"
                             : lead.status === "resolved"
                             ? "bg-green-100 text-green-700"
                             : "bg-slate-100 text-slate-600"

@@ -58,7 +58,7 @@ export function AdminSidebar({
               </div>
               <div>
                 <h1 className="font-bold text-sm text-white leading-none">Hope Global</h1>
-                <span className="text-[10px] font-semibold text-amber-400 uppercase tracking-wider">
+                <span className="text-[10px] font-semibold text-accent uppercase tracking-wider">
                   Admin Portal
                 </span>
               </div>
@@ -105,7 +105,7 @@ export function AdminSidebar({
               href="https://innovtec.it.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-amber-400 hover:underline transition-colors"
+              className="font-medium text-accent hover:underline transition-colors"
             >
               Innovtec
             </a>

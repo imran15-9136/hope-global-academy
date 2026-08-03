@@ -39,7 +39,7 @@ export default async function StudyInCountryPage({ params }: { params: Promise<{
         </div>
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl space-y-4">
-            <span className="inline-block rounded-full bg-amber-400/20 px-3 py-1 text-xs font-semibold text-amber-400 uppercase tracking-wider">
+            <span className="inline-block rounded-full bg-accent/20 px-3 py-1 text-xs font-semibold text-accent uppercase tracking-wider">
               Study Abroad Destination
             </span>
             <h1 className="text-4xl font-extrabold sm:text-5xl">Study in {dest.name}</h1>
@@ -53,7 +53,7 @@ export default async function StudyInCountryPage({ params }: { params: Promise<{
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             <div className="rounded-xl border border-slate-200 bg-slate-50 p-6 space-y-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 text-primary">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-light text-primary">
                 <DollarSign className="h-5 w-5" />
               </div>
               <h3 className="font-bold text-slate-900">Tuition Range</h3>
@@ -61,7 +61,7 @@ export default async function StudyInCountryPage({ params }: { params: Promise<{
             </div>
 
             <div className="rounded-xl border border-slate-200 bg-slate-50 p-6 space-y-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100 text-amber-600">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent-light text-accent">
                 <Calendar className="h-5 w-5" />
               </div>
               <h3 className="font-bold text-slate-900">Intake Months</h3>

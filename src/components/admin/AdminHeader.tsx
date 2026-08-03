@@ -47,7 +47,7 @@ export function AdminHeader({ onToggleMobileMenu }: { onToggleMobileMenu?: () =>
             href="https://innovcrm.hopeglobalacademy.co.uk/auth/login"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden lg:inline-flex items-center gap-1.5 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors border border-blue-200 rounded-md px-3 py-1.5"
+            className="hidden lg:inline-flex items-center gap-1.5 text-xs font-semibold text-primary bg-primary-light hover:bg-primary-light/80 transition-colors border border-primary/20 rounded-md px-3 py-1.5"
           >
             <span>Application CRM</span>
             <ExternalLink className="h-3.5 w-3.5" />
