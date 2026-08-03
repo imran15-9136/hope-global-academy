@@ -78,7 +78,7 @@ export function Footer() {
         <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
             <p>© {new Date().getFullYear()} Hope Global Academy. All rights reserved.</p>
-            <span className="hidden sm:inline text-slate-700">|</span>
+            {/* <span className="hidden sm:inline text-slate-700">|</span>
             <p>
               Developed by:{" "}
               <a
@@ -89,7 +89,7 @@ export function Footer() {
               >
                 Innovtec
               </a>
-            </p>
+            </p> */}
           </div>
           <div className="flex gap-6">
             <a href="#" className="hover:text-slate-400 transition-colors">Privacy Policy</a>
