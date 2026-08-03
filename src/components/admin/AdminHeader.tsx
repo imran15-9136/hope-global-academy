@@ -4,6 +4,7 @@ import { signOut, useSession } from "next-auth/react";
 import { LogOut, User, ExternalLink, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { CrmDropdown } from "../shared/CrmDropdown";
 
 const routeTitles: Record<string, string> = {
   "/admin": "Dashboard Overview",
@@ -43,15 +44,9 @@ export function AdminHeader({ onToggleMobileMenu }: { onToggleMobileMenu?: () =>
             <span>View Live Site</span>
             <ExternalLink className="h-3.5 w-3.5" />
           </Link>
-          <a
-            href="https://innovcrm.hopeglobalacademy.co.uk/auth/login"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden lg:inline-flex items-center gap-1.5 text-xs font-semibold text-primary bg-primary-light hover:bg-primary-light/80 transition-colors border border-primary/20 rounded-md px-3 py-1.5"
-          >
-            <span>Application CRM</span>
-            <ExternalLink className="h-3.5 w-3.5" />
-          </a>
+          <div className="hidden lg:inline-block">
+            <CrmDropdown variant="admin" />
+          </div>
         </div>
       </div>
 

@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { GraduationCap, Mail, Phone, MapPin, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, Globe } from "lucide-react";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -7,18 +8,14 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white">
-                <GraduationCap className="h-6 w-6" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-lg font-bold leading-tight tracking-tight text-white">
-                  Hope Global
-                </span>
-                <span className="text-xs font-semibold uppercase tracking-wider text-accent">
-                  Academy
-                </span>
-              </div>
+            <Link href="/" className="inline-block bg-white p-1.5 rounded-lg group transition-transform hover:scale-[1.02]">
+              <Image
+                src="/logo.png"
+                alt="Hope Global Academy Logo"
+                width={150}
+                height={45}
+                className="h-10 w-auto object-contain"
+              />
             </Link>
             <p className="text-sm text-slate-400 max-w-sm leading-relaxed">
               Empowering students with overseas higher education solutions. Authorized global representative for premier universities across the UK, USA, Australia, and Canada.

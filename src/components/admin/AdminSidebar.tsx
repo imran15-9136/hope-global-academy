@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import {
   LayoutDashboard,
   Users,
@@ -50,18 +51,19 @@ export function AdminSidebar({
           <div className="flex h-16 shrink-0 items-center justify-between border-b border-slate-800 px-6">
             <Link
               href="/admin"
-              className="flex items-center gap-3"
+              className="flex items-center gap-2.5"
               onClick={() => setMobileOpen?.(false)}
             >
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-white shadow-md">
-                <GraduationCap className="h-5 w-5" />
-              </div>
-              <div>
-                <h1 className="font-bold text-sm text-white leading-none">Hope Global</h1>
-                <span className="text-[10px] font-semibold text-accent uppercase tracking-wider">
-                  Admin Portal
-                </span>
-              </div>
+              <Image
+                src="/logo.png"
+                alt="Hope Global Academy Logo"
+                width={120}
+                height={36}
+                className="h-8 w-auto object-contain bg-white p-1 rounded"
+              />
+              <span className="text-[10px] font-semibold text-accent uppercase tracking-wider">
+                Admin
+              </span>
             </Link>
 
             <button

@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { GraduationCap, Lock, Mail } from "lucide-react";
+import { Lock, Mail } from "lucide-react";
+import Image from "next/image";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -41,8 +42,15 @@ export default function AdminLoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-slate-900 px-4 py-12">
       <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-elevation">
         <div className="text-center space-y-2">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-white shadow-md">
-            <GraduationCap className="h-7 w-7" />
+          <div className="flex justify-center pb-2">
+            <Image
+              src="/logo.png"
+              alt="Hope Global Academy Logo"
+              width={160}
+              height={48}
+              className="h-12 w-auto object-contain"
+              priority
+            />
           </div>
           <h2 className="text-2xl font-extrabold text-slate-900">Admin Portal</h2>
           <p className="text-sm text-slate-500">Sign in to manage Hope Global Academy</p>
