@@ -1,8 +1,9 @@
 "use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Send, CheckCircle2, User, Mail, Phone, BookOpen, Globe } from "lucide-react";
 import { createConsultation } from "@/actions/consultation";
+import { getDestinations } from "@/actions/destination";
+import { COURSE_LEVEL_OPTIONS } from "@/lib/constants";
 
 export function AppointmentForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -15,6 +16,33 @@ export function AppointmentForm() {
   const [interestedCourse, setInterestedCourse] = useState("");
   const [preferredCountry, setPreferredCountry] = useState("");
   const [message, setMessage] = useState("");
+  const [destinations, setDestinations] = useState<string[]>([]);
+
+  useEffect(() => {
+    async function loadDestinations() {
+      try {
+        const data = await getDestinations();
+        if (Array.isArray(data)) {
+          const publishedNames = data
+            .filter((d: any) => d.published !== false)
+            .map((d: any) => d.name);
+          setDestinations(publishedNames);
+        }
+      } catch (err) {
+        console.error("Failed to load destinations", err);
+      }
+    }
+    loadDestinations();
+  }, []);
+
+  const defaultCountries = [
+    "United Kingdom",
+    "United States",
+    "Australia",
+    "Canada",
+    "Europe / Malaysia"
+  ];
+  const countriesToRender = destinations.length > 0 ? destinations : defaultCountries;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,7 +53,7 @@ export function AppointmentForm() {
       name,
       email,
       phone,
-      interestedCourse,
+      courseLevelId: Number(interestedCourse),
       preferredCountry,
       message,
     });
@@ -190,10 +218,11 @@ export function AppointmentForm() {
                           className="w-full rounded-lg border border-slate-300 bg-white pl-10 pr-4 py-2.5 text-sm text-slate-900 transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 appearance-none"
                         >
                           <option value="">Select Level</option>
-                          <option value="Undergraduate Degree">Undergraduate Degree</option>
-                          <option value="Postgraduate Degree">Postgraduate Degree (Master's/MBA)</option>
-                          <option value="Diploma Program">Diploma / Pathway Program</option>
-                          <option value="Foundation Course">Foundation Course</option>
+                          {COURSE_LEVEL_OPTIONS.map((item) => (
+                            <option key={item.id} value={item.id}>
+                              {item.name}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -211,11 +240,11 @@ export function AppointmentForm() {
                           className="w-full rounded-lg border border-slate-300 bg-white pl-10 pr-4 py-2.5 text-sm text-slate-900 transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 appearance-none"
                         >
                           <option value="">Select Destination</option>
-                          <option value="United Kingdom">United Kingdom</option>
-                          <option value="United States">United States</option>
-                          <option value="Australia">Australia</option>
-                          <option value="Canada">Canada</option>
-                          <option value="Europe / Malaysia">Europe / Malaysia</option>
+                          {countriesToRender.map((country) => (
+                            <option key={country} value={country}>
+                              {country}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>

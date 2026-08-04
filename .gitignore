@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-# dependencies
-/node_modules
-/.pnpm
-/.yarn
-=======
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -13,7 +7,6 @@
 
 # testing
 /coverage
->>>>>>> c776ddeb10c26d764e99fc796fc98d23707ac2e8
 
 # next.js
 /.next/
@@ -22,13 +15,10 @@
 # production
 /build
 
-<<<<<<< HEAD
-=======
 # misc
 .DS_Store
 *.pem
 
->>>>>>> c776ddeb10c26d764e99fc796fc98d23707ac2e8
 # debug
 npm-debug.log*
 yarn-debug.log*
@@ -44,10 +34,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-<<<<<<< HEAD
-
-# OS
-.DS_Store
-Thumbs.db
-=======
->>>>>>> c776ddeb10c26d764e99fc796fc98d23707ac2e8
