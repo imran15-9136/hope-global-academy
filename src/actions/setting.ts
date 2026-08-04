@@ -29,6 +29,7 @@ export async function getSettings() {
 
 export async function updateSettings(formData: {
   siteName?: string;
+  logo?: string;
   phone?: string;
   email?: string;
   whatsapp?: string;

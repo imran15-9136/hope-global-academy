@@ -1,37 +1,48 @@
-import { BookOpen, GraduationCap, Award, Compass } from "lucide-react";
+import * as LucideIcons from "lucide-react";
 
-const courses = [
+interface CourseItem {
+  _id?: string;
+  title: string;
+  description: string;
+  icon?: string;
+  duration?: string;
+  level?: string;
+}
+
+const defaultCourses: CourseItem[] = [
   {
     title: "Undergraduate Degrees",
     description: "Bachelor of Science (BSc), Bachelor of Arts (BA), Bachelor of Business Administration (BBA) with placement years.",
     duration: "3 - 4 Years",
-    icon: GraduationCap,
-    popular: "High Demand",
+    icon: "GraduationCap",
+    level: "High Demand",
   },
   {
     title: "Postgraduate Degrees",
     description: "Master of Science (MSc), MBA, Master of Arts (MA) with 1-year intensive options and work placements.",
     duration: "1 - 2 Years",
-    icon: BookOpen,
-    popular: "Top Choice",
+    icon: "BookOpen",
+    level: "Top Choice",
   },
   {
     title: "Diploma & Advanced Pathways",
     description: "HND, International Year One, and Vocational diplomas for fast-track career entry.",
     duration: "1 - 2 Years",
-    icon: Award,
-    popular: "Fast Track",
+    icon: "Award",
+    level: "Fast Track",
   },
   {
     title: "Foundation & Pre-Master's",
     description: "Preparatory pathway courses designed to bridge academic and English language entry requirements.",
     duration: "6 - 12 Months",
-    icon: Compass,
-    popular: "Guaranteed Entry",
+    icon: "Compass",
+    level: "Guaranteed Entry",
   },
 ];
 
-export function Courses() {
+export function Courses({ initialCourses }: { initialCourses?: CourseItem[] }) {
+  const displayCourses = initialCourses && initialCourses.length > 0 ? initialCourses : defaultCourses;
+
   return (
     <section id="courses" className="py-20 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -48,11 +59,11 @@ export function Courses() {
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {courses.map((course, idx) => {
-            const Icon = course.icon;
+          {displayCourses.map((course, idx) => {
+            const Icon = (LucideIcons as any)[course.icon || "GraduationCap"] || LucideIcons.GraduationCap;
             return (
               <div
-                key={idx}
+                key={course._id || idx}
                 className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 shadow-card transition-all duration-300 hover:border-primary/40 hover:shadow-elevation"
               >
                 <div>
@@ -60,9 +71,11 @@ export function Courses() {
                     <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-light text-primary">
                       <Icon className="h-6 w-6" />
                     </div>
-                    <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">
-                      {course.duration}
-                    </span>
+                    {course.duration && (
+                      <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">
+                        {course.duration}
+                      </span>
+                    )}
                   </div>
                   <h3 className="mt-5 text-lg font-bold text-slate-900">
                     {course.title}
@@ -74,7 +87,7 @@ export function Courses() {
 
                 <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
                   <span className="text-xs font-semibold text-primary">
-                    {course.popular}
+                    {course.level || ""}
                   </span>
                   <a
                     href="#appointment"

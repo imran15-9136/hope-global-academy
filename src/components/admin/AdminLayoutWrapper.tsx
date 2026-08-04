@@ -6,7 +6,7 @@ import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { SessionProviderWrapper } from "@/components/shared/SessionProviderWrapper";
 
-export function AdminLayoutWrapper({ children }: { children: React.ReactNode }) {
+export function AdminLayoutWrapper({ children, logoUrl }: { children: React.ReactNode; logoUrl?: string }) {
   const pathname = usePathname();
   const isLoginPage = pathname === "/admin/login";
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -18,7 +18,7 @@ export function AdminLayoutWrapper({ children }: { children: React.ReactNode }) 
   return (
     <SessionProviderWrapper>
       <div className="flex h-screen overflow-hidden bg-slate-50 font-sans antialiased text-slate-900">
-        <AdminSidebar mobileOpen={sidebarOpen} setMobileOpen={setSidebarOpen} />
+        <AdminSidebar mobileOpen={sidebarOpen} setMobileOpen={setSidebarOpen} logoUrl={logoUrl} />
         <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
           <AdminHeader onToggleMobileMenu={() => setSidebarOpen((prev) => !prev)} />
           <div className="flex-1 overflow-y-auto flex flex-col justify-between">

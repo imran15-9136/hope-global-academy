@@ -10,6 +10,7 @@ import {
   FileText,
   Settings,
   GraduationCap,
+  Building2,
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -18,6 +19,8 @@ const navItems = [
   { name: "Overview", href: "/admin", icon: LayoutDashboard },
   { name: "Consultation Leads", href: "/admin/consultations", icon: Users },
   { name: "Destinations", href: "/admin/destinations", icon: Globe },
+  { name: "Courses", href: "/admin/courses", icon: GraduationCap },
+  { name: "Partner Institutes", href: "/admin/institutes", icon: Building2 },
   { name: "Blogs & Articles", href: "/admin/blogs", icon: FileText },
   { name: "Site Settings", href: "/admin/settings", icon: Settings },
 ];
@@ -25,11 +28,14 @@ const navItems = [
 export function AdminSidebar({
   mobileOpen,
   setMobileOpen,
+  logoUrl,
 }: {
   mobileOpen?: boolean;
   setMobileOpen?: (open: boolean) => void;
+  logoUrl?: string;
 }) {
   const pathname = usePathname();
+  const logoSrc = logoUrl || "/logo.png";
 
   return (
     <>
@@ -55,11 +61,12 @@ export function AdminSidebar({
               onClick={() => setMobileOpen?.(false)}
             >
               <Image
-                src="/logo.png"
+                src={logoSrc}
                 alt="Hope Global Academy Logo"
                 width={120}
                 height={36}
                 className="h-8 w-auto object-contain bg-white p-1 rounded"
+                unoptimized={logoSrc.startsWith("http")}
               />
               <span className="text-[10px] font-semibold text-accent uppercase tracking-wider">
                 Admin

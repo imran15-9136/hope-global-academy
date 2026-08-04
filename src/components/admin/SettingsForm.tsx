@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { updateSettings } from "@/actions/setting";
 import { Save } from "lucide-react";
+import { ImageUpload } from "./ImageUpload";
 
 export function SettingsForm({ initialSettings }: { initialSettings: any }) {
   const [formData, setFormData] = useState(initialSettings || {});
@@ -48,6 +49,15 @@ export function SettingsForm({ initialSettings }: { initialSettings: any }) {
             value={formData.siteName || ""}
             onChange={handleChange}
             className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm focus:border-primary focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <ImageUpload
+            label="Company Logo"
+            value={formData.logo || ""}
+            onChange={(url) => setFormData((prev: any) => ({ ...prev, logo: url }))}
+            folder="logos"
           />
         </div>
 

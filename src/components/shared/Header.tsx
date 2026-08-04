@@ -2,19 +2,30 @@ import Link from "next/link";
 import { Phone } from "lucide-react";
 import { CrmDropdown } from "./CrmDropdown";
 import Image from "next/image";
+import { getSettings } from "@/actions/setting";
 
-export function Header() {
+export async function Header() {
+  let settings = null;
+  try {
+    settings = await getSettings();
+  } catch (error) {
+    console.error("Error loading settings in Header:", error);
+  }
+
+  const logoSrc = settings?.logo || "/logo.png";
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md transition-all">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2 group">
           <Image
-            src="/logo.png"
+            src={logoSrc}
             alt="Hope Global Academy Logo"
             width={160}
             height={48}
             className="h-10 w-auto object-contain transition-transform group-hover:scale-[1.02]"
             priority
+            unoptimized={logoSrc.startsWith("http")}
           />
         </Link>
 

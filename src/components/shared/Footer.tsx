@@ -1,8 +1,18 @@
 import Link from "next/link";
 import { Mail, Phone, MapPin, Globe } from "lucide-react";
 import Image from "next/image";
+import { getSettings } from "@/actions/setting";
 
-export function Footer() {
+export async function Footer() {
+  let settings = null;
+  try {
+    settings = await getSettings();
+  } catch (error) {
+    console.error("Error loading settings in Footer:", error);
+  }
+
+  const logoSrc = settings?.logo || "/logo.png";
+
   return (
     <footer className="bg-slate-900 text-slate-300 border-t border-slate-800">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
@@ -10,11 +20,12 @@ export function Footer() {
           <div className="lg:col-span-2 space-y-4">
             <Link href="/" className="inline-block bg-white p-1.5 rounded-lg group transition-transform hover:scale-[1.02]">
               <Image
-                src="/logo.png"
+                src={logoSrc}
                 alt="Hope Global Academy Logo"
                 width={150}
                 height={45}
                 className="h-10 w-auto object-contain"
+                unoptimized={logoSrc.startsWith("http")}
               />
             </Link>
             <p className="text-sm text-slate-400 max-w-sm leading-relaxed">

@@ -1,14 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { createDestination, deleteDestination } from "@/actions/destination";
-import { Plus, Trash2, Globe, Image as ImageIcon } from "lucide-react";
+import { createDestination, deleteDestination, updateDestination } from "@/actions/destination";
+import { Plus, Trash2, Globe, Pencil } from "lucide-react";
 import Image from "next/image";
+import { ImageUpload } from "./ImageUpload";
 
 export function DestinationManager({ initialDestinations }: { initialDestinations: any[] }) {
   const [destinations, setDestinations] = useState(initialDestinations);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [editingDestination, setEditingDestination] = useState<any | null>(null);
 
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
@@ -17,32 +19,67 @@ export function DestinationManager({ initialDestinations }: { initialDestination
   const [intake, setIntake] = useState("");
   const [shortDescription, setShortDescription] = useState("");
 
-  const handleCreate = async (e: React.FormEvent) => {
+  const resetForm = () => {
+    setName("");
+    setSlug("");
+    setImage("");
+    setTuitionRange("");
+    setIntake("");
+    setShortDescription("");
+    setEditingDestination(null);
+  };
+
+  const handleOpenCreate = () => {
+    resetForm();
+    setShowModal(true);
+  };
+
+  const handleOpenEdit = (dest: any) => {
+    setName(dest.name);
+    setSlug(dest.slug);
+    setImage(dest.image || "");
+    setTuitionRange(dest.tuitionRange || "");
+    setIntake(dest.intake || "");
+    setShortDescription(dest.shortDescription || "");
+    setEditingDestination(dest);
+    setShowModal(true);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    const res = await createDestination({
+    const payload = {
       name,
       slug: slug || name.toLowerCase().replace(/\s+/g, "-"),
       image: image || "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=800&auto=format&fit=crop",
       tuitionRange,
       intake,
       shortDescription,
-    });
+    };
 
-    if (res.success) {
-      if (res.data) {
-        setDestinations((prev) => [res.data, ...prev]);
+    if (editingDestination) {
+      const res = await updateDestination(editingDestination._id, payload);
+      if (res.success) {
+        setDestinations((prev) =>
+          prev.map((d) => (d._id === editingDestination._id ? { ...d, ...payload } : d))
+        );
+        setShowModal(false);
+        resetForm();
+      } else {
+        alert(res.message);
       }
-      setShowModal(false);
-      setName("");
-      setSlug("");
-      setImage("");
-      setTuitionRange("");
-      setIntake("");
-      setShortDescription("");
     } else {
-      alert(res.message);
+      const res = await createDestination(payload);
+      if (res.success) {
+        if (res.data) {
+          setDestinations((prev) => [res.data, ...prev]);
+        }
+        setShowModal(false);
+        resetForm();
+      } else {
+        alert(res.message);
+      }
     }
     setLoading(false);
   };
@@ -60,7 +97,7 @@ export function DestinationManager({ initialDestinations }: { initialDestination
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-bold text-slate-900">All Destinations ({destinations.length})</h2>
         <button
-          onClick={() => setShowModal(true)}
+          onClick={handleOpenCreate}
           className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-hover transition-colors"
         >
           <Plus className="h-4 w-4" />
@@ -105,7 +142,14 @@ export function DestinationManager({ initialDestinations }: { initialDestination
                   </p>
                 </div>
               </div>
-              <div className="p-4 border-t border-slate-100 flex justify-end">
+              <div className="p-4 border-t border-slate-100 flex justify-between items-center bg-slate-50/50">
+                <button
+                  onClick={() => handleOpenEdit(dest)}
+                  className="text-xs font-semibold text-primary hover:text-primary-hover flex items-center gap-1"
+                >
+                  <Pencil className="h-3.5 w-3.5" />
+                  <span>Edit</span>
+                </button>
                 <button
                   onClick={() => handleDelete(dest._id)}
                   className="text-xs font-semibold text-red-600 hover:text-red-800 flex items-center gap-1"
@@ -122,9 +166,11 @@ export function DestinationManager({ initialDestinations }: { initialDestination
       {/* Modal Dialog */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-elevation space-y-4">
-            <h3 className="text-lg font-bold text-slate-900">Add New Destination</h3>
-            <form onSubmit={handleCreate} className="space-y-4">
+          <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-elevation space-y-4 max-h-[90vh] overflow-y-auto">
+            <h3 className="text-lg font-bold text-slate-900">
+              {editingDestination ? "Edit Destination" : "Add New Destination"}
+            </h3>
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-700">Country Name *</label>
                 <input
@@ -150,13 +196,11 @@ export function DestinationManager({ initialDestinations }: { initialDestination
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700">Cover Image URL</label>
-                <input
-                  type="text"
+                <ImageUpload
+                  label="Cover Image"
                   value={image}
-                  onChange={(e) => setImage(e.target.value)}
-                  placeholder="https://..."
-                  className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm focus:border-primary focus:outline-none"
+                  onChange={setImage}
+                  folder="destinations"
                 />
               </div>
 
@@ -197,7 +241,10 @@ export function DestinationManager({ initialDestinations }: { initialDestination
               <div className="flex justify-end gap-3 pt-2">
                 <button
                   type="button"
-                  onClick={() => setShowModal(false)}
+                  onClick={() => {
+                    setShowModal(false);
+                    resetForm();
+                  }}
                   className="rounded-lg border border-slate-300 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100"
                 >
                   Cancel
@@ -207,7 +254,7 @@ export function DestinationManager({ initialDestinations }: { initialDestination
                   disabled={loading}
                   className="rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-white hover:bg-primary-hover"
                 >
-                  {loading ? "Saving..." : "Create Destination"}
+                  {loading ? "Saving..." : editingDestination ? "Update Destination" : "Create Destination"}
                 </button>
               </div>
             </form>

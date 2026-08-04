@@ -1,6 +1,13 @@
 import { Building2, Award } from "lucide-react";
 
-const institutes = [
+interface InstituteItem {
+  _id?: string;
+  name: string;
+  country: string;
+  ranking: string;
+}
+
+const defaultInstitutes: InstituteItem[] = [
   { name: "University of Oxford", country: "UK", ranking: "Top 5 Global" },
   { name: "University of Cambridge", country: "UK", ranking: "Top 5 Global" },
   { name: "Harvard University", country: "USA", ranking: "Top 5 Global" },
@@ -11,7 +18,10 @@ const institutes = [
   { name: "Arizona State University", country: "USA", ranking: "#1 Innovation" },
 ];
 
-export function Institutes() {
+export function Institutes({ initialInstitutes }: { initialInstitutes?: InstituteItem[] }) {
+  const displayInstitutes =
+    initialInstitutes && initialInstitutes.length > 0 ? initialInstitutes : defaultInstitutes;
+
   return (
     <section id="institutes" className="py-20 bg-slate-900 text-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -28,9 +38,9 @@ export function Institutes() {
         </div>
 
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-4">
-          {institutes.map((inst, idx) => (
+          {displayInstitutes.map((inst, idx) => (
             <div
-              key={idx}
+              key={inst._id || idx}
               className="flex flex-col items-center justify-center rounded-xl border border-slate-800 bg-slate-800/50 p-6 text-center backdrop-blur-sm transition-all duration-300 hover:border-accent/50 hover:bg-slate-800"
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-700/60 text-accent mb-3">

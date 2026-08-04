@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { createBlog, deleteBlog } from "@/actions/blog";
 import { Plus, Trash2, FileText } from "lucide-react";
+import { ImageUpload } from "./ImageUpload";
 
 export function BlogManager({ initialBlogs }: { initialBlogs: any[] }) {
   const [blogs, setBlogs] = useState(initialBlogs);
@@ -136,13 +137,11 @@ export function BlogManager({ initialBlogs }: { initialBlogs: any[] }) {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700">Cover Image URL</label>
-                <input
-                  type="text"
+                <ImageUpload
+                  label="Cover Image"
                   value={coverImage}
-                  onChange={(e) => setCoverImage(e.target.value)}
-                  placeholder="https://..."
-                  className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm focus:border-primary focus:outline-none"
+                  onChange={setCoverImage}
+                  folder="blogs"
                 />
               </div>
 

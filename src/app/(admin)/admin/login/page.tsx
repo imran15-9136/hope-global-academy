@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Lock, Mail } from "lucide-react";
 import Image from "next/image";
+import { getSettings } from "@/actions/setting";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -12,6 +13,17 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [logoSrc, setLogoSrc] = useState("/logo.png");
+
+  useEffect(() => {
+    getSettings()
+      .then((settings) => {
+        if (settings?.logo) {
+          setLogoSrc(settings.logo);
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,12 +56,13 @@ export default function AdminLoginPage() {
         <div className="text-center space-y-2">
           <div className="flex justify-center pb-2">
             <Image
-              src="/logo.png"
+              src={logoSrc}
               alt="Hope Global Academy Logo"
               width={160}
               height={48}
               className="h-12 w-auto object-contain"
               priority
+              unoptimized={logoSrc.startsWith("http")}
             />
           </div>
           <h2 className="text-2xl font-extrabold text-slate-900">Admin Portal</h2>
