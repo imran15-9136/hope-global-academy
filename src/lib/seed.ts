@@ -26,52 +26,107 @@ export async function seedDatabase() {
   }
 
   // 2. Seed Destinations
-  const destinationsCount = await Destination.countDocuments();
-  if (destinationsCount === 0) {
-    await Destination.insertMany([
-      {
-        name: "United Kingdom",
-        slug: "uk",
-        shortDescription: "Study in top Russell Group universities with 1-year Master's options and 2-year Post-Study Work (PSW) visa.",
-        image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=800&auto=format&fit=crop",
-        tuitionRange: "£12,000 - £25,000 / year",
-        intake: "Jan / Sep Intake",
-        featured: true,
-        published: true,
-      },
-      {
-        name: "United States",
-        slug: "usa",
-        shortDescription: "Access thousands of Ivy League and state universities with STEM OPT extensions up to 3 years.",
-        image: "https://images.unsplash.com/photo-1485738422979-f5c462d49f74?q=80&w=800&auto=format&fit=crop",
-        tuitionRange: "$18,000 - $40,000 / year",
-        intake: "Fall / Spring Intake",
-        featured: true,
-        published: true,
-      },
-      {
-        name: "Australia",
-        slug: "australia",
-        shortDescription: "High-quality education, vibrant student lifestyle, and post-study work rights up to 4 years.",
-        image: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?q=80&w=800&auto=format&fit=crop",
-        tuitionRange: "AUD $20,000 - $38,000 / year",
-        intake: "Feb / July Intake",
-        featured: true,
-        published: true,
-      },
-      {
-        name: "Canada",
-        slug: "canada",
-        shortDescription: "World-class education, safe environment, and direct permanent residency (PR) pathways.",
-        image: "https://images.unsplash.com/photo-1517935703635-27c737826572?q=80&w=800&auto=format&fit=crop",
-        tuitionRange: "CAD $15,000 - $32,000 / year",
-        intake: "Jan / May / Sep Intake",
-        featured: true,
-        published: true,
-      },
-    ]);
-    console.log("✅ Destinations seeded.");
+  const initialDestinations = [
+    {
+      name: "United Kingdom",
+      slug: "uk",
+      shortDescription:
+        "Study in top Russell Group universities in the UK with 1-year Master's options and 2-year Post-Study Work (PSW) Graduate visa.",
+      image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=800&auto=format&fit=crop",
+      tuitionRange: "£12,000 - £25,000 / year",
+      intake: "Jan / Sep Intake",
+      postStudyWork: "2 Years Graduate Route Visa",
+      visaSuccessRate: "98% High Success Rate",
+      featured: true,
+      published: true,
+      highlights: [
+        { title: "Internationally Accredited Degrees", description: "Degrees awarded by Russell Group and UK universities are globally respected by top employers." },
+        { title: "2-Year Post-Study Work Permit", description: "Graduate Route visa allows international students to work in the UK for 2 years after graduation." },
+        { title: "1-Year Master's Programs", description: "Save time and living costs with intensive 12-month master's degree options." },
+      ],
+    },
+    {
+      name: "United States",
+      slug: "usa",
+      shortDescription:
+        "Access thousands of Ivy League and state universities in the US with STEM OPT extension permits up to 3 years.",
+      image: "https://images.unsplash.com/photo-1485738422979-f5c462d49f74?q=80&w=800&auto=format&fit=crop",
+      tuitionRange: "$18,000 - $40,000 / year",
+      intake: "Fall / Spring Intake",
+      postStudyWork: "1 to 3 Years STEM OPT",
+      visaSuccessRate: "97% Success Rate",
+      featured: true,
+      published: true,
+      highlights: [
+        { title: "Ivy League & World Rankings", description: "Home to the world's highest ranked academic institutions and cutting-edge research facilities." },
+        { title: "3-Year STEM OPT Extension", description: "STEM graduates can work in the United States for up to 36 months after graduation." },
+        { title: "Generous Merit Scholarships", description: "Scholarships and tuition assistantships available for qualified undergraduate and graduate applicants." },
+      ],
+    },
+    {
+      name: "Australia",
+      slug: "australia",
+      shortDescription:
+        "High-quality Group of Eight education, vibrant student lifestyle, and post-study work rights up to 4 years.",
+      image: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?q=80&w=800&auto=format&fit=crop",
+      tuitionRange: "AUD $20,000 - $38,000 / year",
+      intake: "Feb / July Intake",
+      postStudyWork: "2 to 4 Years Work Visa",
+      visaSuccessRate: "98% Success Rate",
+      featured: true,
+      published: true,
+      highlights: [
+        { title: "Group of Eight Universities", description: "Study in leading research-intensive Australian universities ranked in global top 50." },
+        { title: "Extended Post-Study Work Rights", description: "Qualify for up to 4 years post-study work visa upon graduation in regional areas." },
+        { title: "High Quality of Life", description: "Enjoy safe, multicultural cities rated among the top liveable student cities in the world." },
+      ],
+    },
+    {
+      name: "Canada",
+      slug: "canada",
+      shortDescription:
+        "World-class education, safe environment, PGWP work permits, and direct Permanent Residency (PR) pathways.",
+      image: "https://images.unsplash.com/photo-1517935703635-27c737826572?q=80&w=800&auto=format&fit=crop",
+      tuitionRange: "CAD $15,000 - $32,000 / year",
+      intake: "Jan / May / Sep Intake",
+      postStudyWork: "Up to 3 Years PGWP",
+      visaSuccessRate: "98% Success Rate",
+      featured: true,
+      published: true,
+      highlights: [
+        { title: "Direct Immigration & PR Pathways", description: "Express Entry and Provincial Nominee Programs (PNP) offer clear pathways to Canadian PR." },
+        { title: "Post-Graduation Work Permit (PGWP)", description: "Open work permit up to 3 years allowing graduates to work for any employer in Canada." },
+        { title: "Safe & Welcoming Nation", description: "Known for world-class healthcare, safety, and vibrant international student communities." },
+      ],
+    },
+    {
+      name: "New Zealand",
+      slug: "new-zealand",
+      shortDescription:
+        "Study in New Zealand for world-class research universities, safe English-speaking environment, and generous post-study work rights up to 3 years.",
+      image: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?q=80&w=800&auto=format&fit=crop",
+      tuitionRange: "NZD $22,000 - $35,000 / year",
+      intake: "Feb / July Intake",
+      postStudyWork: "Up to 3 Years Open Work Visa",
+      visaSuccessRate: "98% Success Rate",
+      featured: true,
+      published: true,
+      highlights: [
+        { title: "All 8 Universities Top 3% Globally", description: "Every public university in New Zealand ranks in the top 3% of universities worldwide." },
+        { title: "Up to 3-Year Open Work Visa", description: "Graduate open work rights allowing you to work for any employer upon completing your degree." },
+        { title: "Safe & Peaceful Environment", description: "Ranked among the peaceful and safest English-speaking countries with exceptional quality of living." },
+      ],
+    },
+  ];
+
+  for (const item of initialDestinations) {
+    await Destination.findOneAndUpdate(
+      { slug: item.slug },
+      { $setOnInsert: item },
+      { upsert: true, new: true }
+    );
   }
+  console.log("✅ Destinations seeded/upserted into MongoDB.");
 
   // 3. Seed Courses
   const coursesCount = await Course.countDocuments();

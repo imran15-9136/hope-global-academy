@@ -1,5 +1,10 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
+export interface IDestinationHighlight {
+  title: string;
+  description: string;
+}
+
 export interface IDestination extends Document {
   name: string;
   slug: string;
@@ -8,11 +13,19 @@ export interface IDestination extends Document {
   image?: string;
   tuitionRange?: string;
   intake?: string;
+  postStudyWork?: string;
+  visaSuccessRate?: string;
+  highlights?: IDestinationHighlight[];
   featured: boolean;
   published: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
+
+const DestinationHighlightSchema = new Schema<IDestinationHighlight>({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+});
 
 const DestinationSchema = new Schema<IDestination>(
   {
@@ -23,6 +36,9 @@ const DestinationSchema = new Schema<IDestination>(
     image: { type: String },
     tuitionRange: { type: String },
     intake: { type: String },
+    postStudyWork: { type: String, default: "2 - 3 Years Work Permit" },
+    visaSuccessRate: { type: String, default: "98% Success Rate" },
+    highlights: { type: [DestinationHighlightSchema], default: [] },
     featured: { type: Boolean, default: false },
     published: { type: Boolean, default: true },
   },

@@ -5,7 +5,11 @@ import { createConsultation } from "@/actions/consultation";
 import { getDestinations } from "@/actions/destination";
 import { COURSE_LEVEL_OPTIONS } from "@/lib/constants";
 
-export function AppointmentForm() {
+interface AppointmentFormProps {
+  initialCountry?: string;
+}
+
+export function AppointmentForm({ initialCountry }: AppointmentFormProps = {}) {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -14,7 +18,7 @@ export function AppointmentForm() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [interestedCourse, setInterestedCourse] = useState("");
-  const [preferredCountry, setPreferredCountry] = useState("");
+  const [preferredCountry, setPreferredCountry] = useState(initialCountry || "");
   const [message, setMessage] = useState("");
   const [destinations, setDestinations] = useState<string[]>([]);
 

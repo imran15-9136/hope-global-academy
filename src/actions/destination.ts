@@ -6,10 +6,40 @@ import Destination from "@/models/Destination";
 import { ActionResponse } from "@/types/actions";
 import { auth } from "@/lib/auth";
 
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+}
+
 export async function getDestinations() {
   await connectToDatabase();
   const destinations = await Destination.find().sort({ createdAt: -1 }).lean();
-  return JSON.parse(JSON.stringify(destinations));
+  
+  // Clean up any legacy slugs with spaces or %20
+  const cleaned = destinations.map((dest: any) => {
+    const cleanSlug = slugify(dest.slug || dest.name);
+    return {
+      ...dest,
+      slug: cleanSlug,
+    };
+  });
+
+  return JSON.parse(JSON.stringify(cleaned));
+}
+
+export async function getDestinationById(id: string) {
+  try {
+    await connectToDatabase();
+    const dest = await Destination.findById(id).lean();
+    if (!dest) return null;
+    return JSON.parse(JSON.stringify(dest));
+  } catch (error) {
+    console.error("Error fetching destination by id:", error);
+    return null;
+  }
 }
 
 export async function createDestination(formData: {
@@ -20,6 +50,9 @@ export async function createDestination(formData: {
   image?: string;
   tuitionRange?: string;
   intake?: string;
+  postStudyWork?: string;
+  visaSuccessRate?: string;
+  highlights?: Array<{ title: string; description: string }>;
   featured?: boolean;
   published?: boolean;
 }): Promise<ActionResponse> {
@@ -35,19 +68,26 @@ export async function createDestination(formData: {
 
     await connectToDatabase();
 
-    const existing = await Destination.findOne({ slug: formData.slug.toLowerCase() });
+    const cleanSlug = slugify(formData.slug || formData.name);
+
+    const existing = await Destination.findOne({
+      $or: [{ slug: cleanSlug }, { slug: formData.slug.toLowerCase().trim() }],
+    });
     if (existing) {
       return { success: false, message: "A destination with this slug already exists." };
     }
 
     const createdDest = await Destination.create({
-      name: formData.name,
-      slug: formData.slug.toLowerCase().trim(),
+      name: formData.name.trim(),
+      slug: cleanSlug,
       shortDescription: formData.shortDescription || "",
       content: formData.content || "",
       image: formData.image || "",
       tuitionRange: formData.tuitionRange || "",
       intake: formData.intake || "",
+      postStudyWork: formData.postStudyWork || "2 - 3 Years Work Permit",
+      visaSuccessRate: formData.visaSuccessRate || "98% Success Rate",
+      highlights: formData.highlights || [],
       featured: formData.featured ?? false,
       published: formData.published ?? true,
     });
@@ -76,6 +116,9 @@ export async function updateDestination(
     image?: string;
     tuitionRange?: string;
     intake?: string;
+    postStudyWork?: string;
+    visaSuccessRate?: string;
+    highlights?: Array<{ title: string; description: string }>;
     featured?: boolean;
     published?: boolean;
   }
@@ -88,14 +131,19 @@ export async function updateDestination(
 
     await connectToDatabase();
 
+    const cleanSlug = slugify(formData.slug || formData.name);
+
     await Destination.findByIdAndUpdate(id, {
-      name: formData.name,
-      slug: formData.slug.toLowerCase().trim(),
+      name: formData.name.trim(),
+      slug: cleanSlug,
       shortDescription: formData.shortDescription,
       content: formData.content,
       image: formData.image,
       tuitionRange: formData.tuitionRange,
       intake: formData.intake,
+      postStudyWork: formData.postStudyWork,
+      visaSuccessRate: formData.visaSuccessRate,
+      highlights: formData.highlights,
       featured: formData.featured,
       published: formData.published,
     });

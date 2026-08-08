@@ -45,6 +45,14 @@ const defaultDestinations: DestinationItem[] = [
     intake: "Jan / May / Sep Intake",
     tuitionRange: "CAD $15,000 - $32,000 / year",
   },
+  {
+    _id: "default-nz",
+    name: "New Zealand",
+    slug: "new-zealand",
+    image: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?q=80&w=800&auto=format&fit=crop",
+    intake: "Feb / July Intake",
+    tuitionRange: "NZD $22,000 - $35,000 / year",
+  },
 ];
 
 export function Destinations({ initialDestinations }: { initialDestinations?: DestinationItem[] }) {
@@ -105,7 +113,7 @@ export function Destinations({ initialDestinations }: { initialDestinations?: De
 
                 <div className="mt-6 pt-4 border-t border-slate-100">
                   <Link
-                    href={`/study-in/${dest.slug}`}
+                    href={`/study-in/${(dest.slug || dest.name).toLowerCase().trim().replace(/\s+/g, "-")}`}
                     className="inline-flex w-full items-center justify-center gap-1.5 rounded-md bg-slate-100 px-3.5 py-2 text-xs font-semibold text-slate-700 transition-colors group-hover:bg-primary group-hover:text-white"
                   >
                     <span>Apply for {dest.name}</span>
