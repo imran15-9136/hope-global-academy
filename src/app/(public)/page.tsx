@@ -1,6 +1,7 @@
 import { Hero } from "@/components/public/Hero";
 import { Destinations } from "@/components/public/Destinations";
 import { Courses } from "@/components/public/Courses";
+import { WhyChooseUs } from "@/components/public/WhyChooseUs";
 import { Institutes } from "@/components/public/Institutes";
 import { AppointmentForm } from "@/components/public/AppointmentForm";
 import { getDestinations } from "@/actions/destination";
@@ -28,6 +29,7 @@ export default async function Home() {
   return (
     <>
       <Hero settings={settings} />
+      <WhyChooseUs settings={settings} />
       <Destinations initialDestinations={destinations} />
       <Courses initialCourses={courses} />
       <Institutes initialInstitutes={institutes} />

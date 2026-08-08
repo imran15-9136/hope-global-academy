@@ -29,4 +29,26 @@ export async function uploadImageToCloudinary(
   });
 }
 
+export async function uploadVideoToCloudinary(
+  fileBuffer: Buffer,
+  folder: string = "hope-global-academy/videos"
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      {
+        folder,
+        resource_type: "video",
+      },
+      (error, result) => {
+        if (error || !result) {
+          return reject(error || new Error("Cloudinary video upload failed"));
+        }
+        resolve(result.secure_url);
+      }
+    );
+
+    uploadStream.end(fileBuffer);
+  });
+}
+
 export default cloudinary;
