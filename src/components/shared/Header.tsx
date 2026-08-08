@@ -39,8 +39,8 @@ export async function Header() {
           <Link href="/#institutes" className="transition-colors hover:text-primary">
             Institutes
           </Link>
-          <Link href="/blog" className="transition-colors hover:text-primary">
-            Blog
+          <Link href="/services" className="transition-colors hover:text-primary">
+            Services
           </Link>
           <Link href="/contact" className="transition-colors hover:text-primary">
             Contact

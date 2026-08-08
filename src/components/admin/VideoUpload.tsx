@@ -85,9 +85,33 @@ export function VideoUpload({
     setError(null);
   };
 
+  const isYouTubeUrl = (url: string) => {
+    return url.includes("youtube.com") || url.includes("youtu.be");
+  };
+
+  const isVimeoUrl = (url: string) => {
+    return url.includes("vimeo.com");
+  };
+
+  const getYouTubeEmbedUrl = (url: string) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11
+      ? `https://www.youtube.com/embed/${match[2]}`
+      : url;
+  };
+
+  const getVimeoEmbedUrl = (url: string) => {
+    const regExp = /vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)/;
+    const match = url.match(regExp);
+    return match && match[3]
+      ? `https://player.vimeo.com/video/${match[3]}`
+      : url;
+  };
+
   return (
     <div className="space-y-2">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <label className="block text-xs font-semibold text-slate-700">{label}</label>
         <button
           type="button"
@@ -95,7 +119,7 @@ export function VideoUpload({
             setShowUrlInput(!showUrlInput);
             setError(null);
           }}
-          className="text-xs font-semibold text-blue-600 hover:underline flex items-center gap-1"
+          className="text-xs font-medium text-blue-600 hover:underline flex items-center gap-1"
         >
           {showUrlInput ? (
             <>
@@ -117,14 +141,16 @@ export function VideoUpload({
             type="text"
             value={manualUrl}
             onChange={(e) => setManualUrl(e.target.value)}
-            placeholder="https://res.cloudinary.com/.../video.mp4 or direct video URL"
+            placeholder="https://www.youtube.com/watch?v=... or direct Cloudinary/MP4 video URL"
             className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
           />
           <button
             type="button"
             onClick={() => {
-              onChange(manualUrl);
-              setShowUrlInput(false);
+              if (manualUrl.trim()) {
+                onChange(manualUrl.trim());
+                setShowUrlInput(false);
+              }
             }}
             className="rounded-lg bg-slate-900 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-800 transition-colors"
           >
@@ -136,11 +162,29 @@ export function VideoUpload({
           {value ? (
             <div className="relative rounded-xl border border-slate-200 bg-slate-900 p-3 flex flex-col gap-3">
               <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black flex items-center justify-center">
-                <video
-                  src={value}
-                  controls
-                  className="w-full h-full object-contain"
-                />
+                {isYouTubeUrl(value) ? (
+                  <iframe
+                    src={getYouTubeEmbedUrl(value)}
+                    title="Video Preview"
+                    className="w-full h-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : isVimeoUrl(value) ? (
+                  <iframe
+                    src={getVimeoEmbedUrl(value)}
+                    title="Video Preview"
+                    className="w-full h-full border-0"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : (
+                  <video
+                    src={value}
+                    controls
+                    className="w-full h-full object-contain"
+                  />
+                )}
               </div>
               <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-400 font-mono truncate max-w-md">{value}</p>

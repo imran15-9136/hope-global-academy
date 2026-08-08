@@ -13,12 +13,14 @@ import {
   Building2,
   X,
   MapPin,
+  Briefcase,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { name: "Overview", href: "/admin", icon: LayoutDashboard },
   { name: "Consultation Leads", href: "/admin/consultations", icon: Users },
+  { name: "Services & Video", href: "/admin/services", icon: Briefcase },
   { name: "Destinations", href: "/admin/destinations", icon: Globe },
   { name: "Courses", href: "/admin/courses", icon: GraduationCap },
   { name: "Partner Institutes", href: "/admin/institutes", icon: Building2 },

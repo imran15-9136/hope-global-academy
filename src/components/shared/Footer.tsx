@@ -50,6 +50,7 @@ export async function Footer() {
               Portals & Services
             </h3>
             <ul className="mt-4 space-y-2 text-sm text-slate-400">
+              <li><Link href="/services" className="hover:text-accent transition-colors">Our 7 Core Services</Link></li>
               <li><Link href="/#courses" className="hover:text-accent transition-colors">Undergraduate & Masters</Link></li>
               <li><Link href="/consultation" className="hover:text-accent transition-colors">Free Counseling</Link></li>
               <li><Link href="/contact" className="hover:text-accent transition-colors">Global Branch Offices</Link></li>

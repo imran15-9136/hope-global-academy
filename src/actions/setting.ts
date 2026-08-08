@@ -101,6 +101,9 @@ export async function updateSettings(formData: {
   whyChooseUsSubtitle?: string;
   whyChooseUsVideo?: string;
   whyChooseUsFeatures?: Array<{ title: string; description: string; icon?: string }>;
+  servicesVideo?: string;
+  servicesVideoTitle?: string;
+  servicesVideoSubtitle?: string;
 }): Promise<ActionResponse> {
   try {
     const session = await auth();
@@ -120,6 +123,8 @@ export async function updateSettings(formData: {
     await setting.save();
 
     revalidatePath("/admin/settings");
+    revalidatePath("/admin/services");
+    revalidatePath("/services");
     revalidatePath("/");
 
     return { success: true, message: "Settings updated successfully." };

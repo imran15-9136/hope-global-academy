@@ -6,6 +6,9 @@ export const authConfig: NextAuthConfig = {
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
+      if (process.env.NEXT_PHASE === "phase-production-build") {
+        return true;
+      }
       const isLoggedIn = !!auth?.user;
       const isOnAdmin = nextUrl.pathname.startsWith("/admin");
       const isOnLogin = nextUrl.pathname.startsWith("/admin/login");
