@@ -7,9 +7,10 @@ import { COURSE_LEVEL_OPTIONS } from "@/lib/constants";
 
 interface AppointmentFormProps {
   initialCountry?: string;
+  noBackground?: boolean;
 }
 
-export function AppointmentForm({ initialCountry }: AppointmentFormProps = {}) {
+export function AppointmentForm({ initialCountry, noBackground }: AppointmentFormProps = {}) {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -78,7 +79,7 @@ export function AppointmentForm({ initialCountry }: AppointmentFormProps = {}) {
   };
 
   return (
-    <section id="appointment" className="py-20 bg-gradient-to-b from-white to-primary-light/30">
+    <section id="appointment" className={noBackground ? "py-6 bg-transparent" : "py-20 bg-gradient-to-b from-white to-primary-light/30"}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 items-center">
           <div className="lg:col-span-5 space-y-6">

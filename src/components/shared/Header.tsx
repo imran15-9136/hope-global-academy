@@ -42,7 +42,7 @@ export async function Header() {
           <Link href="/blog" className="transition-colors hover:text-primary">
             Blog
           </Link>
-          <Link href="/#appointment" className="transition-colors hover:text-primary">
+          <Link href="/contact" className="transition-colors hover:text-primary">
             Contact
           </Link>
         </nav>

@@ -12,6 +12,7 @@ import {
   GraduationCap,
   Building2,
   X,
+  MapPin,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -21,6 +22,7 @@ const navItems = [
   { name: "Destinations", href: "/admin/destinations", icon: Globe },
   { name: "Courses", href: "/admin/courses", icon: GraduationCap },
   { name: "Partner Institutes", href: "/admin/institutes", icon: Building2 },
+  { name: "Branch Offices", href: "/admin/offices", icon: MapPin },
   { name: "Blogs & Articles", href: "/admin/blogs", icon: FileText },
   { name: "Site Settings", href: "/admin/settings", icon: Settings },
 ];

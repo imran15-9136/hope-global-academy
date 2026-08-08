@@ -52,6 +52,7 @@ export async function Footer() {
             <ul className="mt-4 space-y-2 text-sm text-slate-400">
               <li><Link href="/#courses" className="hover:text-accent transition-colors">Undergraduate & Masters</Link></li>
               <li><Link href="/consultation" className="hover:text-accent transition-colors">Free Counseling</Link></li>
+              <li><Link href="/contact" className="hover:text-accent transition-colors">Global Branch Offices</Link></li>
               <li>
                 <a
                   href="https://innovcrm.hopeglobalacademy.co.uk/auth/login"
