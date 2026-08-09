@@ -3,16 +3,23 @@ import { Phone } from "lucide-react";
 import { CrmDropdown } from "./CrmDropdown";
 import Image from "next/image";
 import { getSettings } from "@/actions/setting";
+import { getOffices } from "@/actions/office";
 
 export async function Header() {
   let settings = null;
+  let offices = [];
   try {
     settings = await getSettings();
+    offices = await getOffices();
   } catch (error) {
     console.error("Error loading settings in Header:", error);
   }
 
   const logoSrc = settings?.logo || "/logo.png";
+  const siteName = settings?.siteName || "Hope Global Academy";
+  
+  const headOffice = offices.find((o: any) => o.isHeadOffice);
+  const headPhone = headOffice?.phone || settings?.phone || "+880 1700-000000";
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md transition-all">
@@ -20,7 +27,7 @@ export async function Header() {
         <Link href="/" className="flex items-center gap-2 group">
           <Image
             src={logoSrc}
-            alt="Hope Global Academy Logo"
+            alt={`${siteName} Logo`}
             width={160}
             height={48}
             className="h-10 w-auto object-contain transition-transform group-hover:scale-[1.02]"
@@ -49,11 +56,11 @@ export async function Header() {
 
         <div className="flex items-center gap-3">
           <a
-            href="tel:+8801700000000"
+            href={`tel:${headPhone.replace(/[^0-9+]/g, "")}`}
             className="hidden xl:flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-primary transition-colors"
           >
             <Phone className="h-4 w-4 text-primary" />
-            <span>+880 1700-000000</span>
+            <span>{headPhone}</span>
           </a>
           <div className="hidden sm:inline-block">
             <CrmDropdown />

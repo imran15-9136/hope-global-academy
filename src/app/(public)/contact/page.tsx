@@ -78,17 +78,15 @@ export default async function ContactPage() {
         </section>
 
         {/* Global Branch Offices Grid */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 -mt-8 relative z-10 space-y-10">
-          <div className="rounded-3xl bg-white p-6 sm:p-10 shadow-xl border border-slate-200/80">
-            <div className="text-center max-w-xl mx-auto space-y-2 mb-8">
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">Our Branch Locations</h2>
-              <p className="text-sm text-slate-600">
-                Explore our offices across Bangladesh and internationally for personalized 1-on-1 counseling.
-              </p>
-            </div>
-
-            <BranchList offices={offices} />
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-12 relative z-10 space-y-10">
+          <div className="text-center max-w-xl mx-auto space-y-2">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">Our Branch Locations</h2>
+            <p className="text-sm text-slate-600">
+              Explore our offices across Bangladesh and internationally for personalized 1-on-1 counseling.
+            </p>
           </div>
+
+          <BranchList offices={offices} />
         </section>
 
         {/* Quick Contact Info Cards */}

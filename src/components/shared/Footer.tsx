@@ -1,17 +1,38 @@
 import Link from "next/link";
-import { Mail, Phone, MapPin, Globe } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import Image from "next/image";
 import { getSettings } from "@/actions/setting";
+import { getDestinations } from "@/actions/destination";
+import { getOffices } from "@/actions/office";
 
 export async function Footer() {
   let settings = null;
+  let destinations = [];
+  let offices = [];
   try {
     settings = await getSettings();
+    destinations = await getDestinations();
+    offices = await getOffices();
   } catch (error) {
-    console.error("Error loading settings in Footer:", error);
+    console.error("Error loading data in Footer:", error);
   }
 
+  // Find the office marked as Head Office
+  const headOffice = offices.find((o: any) => o.isHeadOffice);
+  const headAddress = headOffice?.address || "Gulshan 2, Dhaka 1212, Bangladesh";
+  const headPhone = headOffice?.phone || settings?.phone || "+880 1700-000000";
+  const headEmail = headOffice?.email || settings?.email || "info@hopeglobalacademy.com";
+
+  // Fallback destinations in case db is empty or error occurs
+  const displayDestinations = destinations.length > 0 ? destinations : [
+    { name: "UK", slug: "uk" },
+    { name: "USA", slug: "usa" },
+    { name: "Australia", slug: "australia" },
+    { name: "Canada", slug: "canada" },
+  ];
+
   const logoSrc = settings?.logo || "/logo.png";
+  const siteName = settings?.siteName || "Hope Global Academy";
 
   return (
     <footer className="bg-slate-900 text-slate-300 border-t border-slate-800">
@@ -21,7 +42,7 @@ export async function Footer() {
             <Link href="/" className="inline-block bg-white p-1.5 rounded-lg group transition-transform hover:scale-[1.02]">
               <Image
                 src={logoSrc}
-                alt="Hope Global Academy Logo"
+                alt={`${siteName} Logo`}
                 width={150}
                 height={45}
                 className="h-10 w-auto object-contain"
@@ -38,10 +59,13 @@ export async function Footer() {
               Destinations
             </h3>
             <ul className="mt-4 space-y-2 text-sm text-slate-400">
-              <li><Link href="/study-in/uk" className="hover:text-accent transition-colors">Study in UK</Link></li>
-              <li><Link href="/study-in/usa" className="hover:text-accent transition-colors">Study in USA</Link></li>
-              <li><Link href="/study-in/australia" className="hover:text-accent transition-colors">Study in Australia</Link></li>
-              <li><Link href="/study-in/canada" className="hover:text-accent transition-colors">Study in Canada</Link></li>
+              {displayDestinations.map((dest: any) => (
+                <li key={dest.slug || dest.name}>
+                  <Link href={`/study-in/${dest.slug}`} className="hover:text-accent transition-colors">
+                    Study in {dest.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -74,15 +98,19 @@ export async function Footer() {
             <ul className="mt-4 space-y-3 text-sm text-slate-400">
               <li className="flex items-start gap-2.5">
                 <MapPin className="h-4 w-4 text-accent shrink-0 mt-0.5" />
-                <span>Gulshan 2, Dhaka 1212, Bangladesh</span>
+                <span className="leading-relaxed">{headAddress}</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="h-4 w-4 text-accent shrink-0" />
-                <span>+880 1700-000000</span>
+                <a href={`tel:${headPhone.replace(/[^0-9+]/g, "")}`} className="hover:text-accent transition-colors">
+                  {headPhone}
+                </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="h-4 w-4 text-accent shrink-0" />
-                <span>info@hopeglobalacademy.com</span>
+                <a href={`mailto:${headEmail}`} className="hover:text-accent transition-colors break-all">
+                  {headEmail}
+                </a>
               </li>
             </ul>
           </div>
@@ -90,7 +118,7 @@ export async function Footer() {
 
         <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-            <p>© {new Date().getFullYear()} Hope Global Academy. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} {siteName}. All rights reserved.</p>
             {/* <span className="hidden sm:inline text-slate-700">|</span>
             <p>
               Developed by:{" "}
