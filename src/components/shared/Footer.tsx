@@ -19,8 +19,8 @@ export async function Footer() {
 
   // Find the office marked as Head Office
   const headOffice = offices.find((o: any) => o.isHeadOffice);
-  const headAddress = headOffice?.address || "Gulshan 2, Dhaka 1212, Bangladesh";
-  const headPhone = headOffice?.phone || settings?.phone || "+880 1898-898850";
+  const headAddress = headOffice?.address || "House 45/2, Rawshan Plaza, Green Road, Dhanmondi, Dhaka-1207";
+  const headPhone = headOffice?.phone || settings?.phone || "+8801709634485";
   const headEmail = headOffice?.email || settings?.email || "info@hopeglobalacademy.co.uk";
 
   // Fallback destinations in case db is empty or error occurs
@@ -42,7 +42,7 @@ export async function Footer() {
             <Link href="/" className="inline-block bg-white p-1.5 rounded-lg group transition-transform hover:scale-[1.02]">
               <Image
                 src={logoSrc}
-                alt={`${siteName} Logo`}
+                alt={`${siteName} - Premier Study Abroad Consultancy`}
                 width={150}
                 height={45}
                 className="h-10 w-auto object-contain"

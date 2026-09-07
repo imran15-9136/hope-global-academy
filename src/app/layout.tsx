@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   creator: "Hope Global Academy",
   publisher: "Hope Global Academy",
   alternates: {
-    canonical: "./",
+    canonical: "/",
   },
   openGraph: {
     title: "Hope Global Academy | Premium Study Abroad Consultation",
@@ -58,10 +58,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: `${SITE_URL}/logo.png`,
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Hope Global Academy - Global Higher Education Consultancy",
+        alt: "Hope Global Academy - Premier Global Higher Education Consultancy",
       },
     ],
   },
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     title: "Hope Global Academy | Premium Study Abroad Consultation",
     description:
       "Expert guidance for higher education in UK, USA, Australia, and Canada. Book a free appointment with Hope Global Academy counselors today.",
-    images: [`${SITE_URL}/logo.png`],
+    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,
@@ -94,8 +94,10 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={inter.variable}>
-      <body className="min-h-screen bg-background font-sans antialiased text-slate-900 selection:bg-primary-light selection:text-primary">
+      <head>
         <JsonLd data={rootSchemas} />
+      </head>
+      <body className="min-h-screen bg-background font-sans antialiased text-slate-900 selection:bg-primary-light selection:text-primary">
         {children}
       </body>
     </html>

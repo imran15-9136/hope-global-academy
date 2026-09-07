@@ -73,8 +73,9 @@ export function Hero({ settings }: HeroProps) {
               <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-slate-100 shadow-elevation">
                 <Image
                   src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1000&auto=format&fit=crop"
-                  alt="Happy students studying abroad"
+                  alt="International students studying abroad at top global partner universities with Hope Global Academy"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 500px"
                   className="object-cover"
                   priority
                 />

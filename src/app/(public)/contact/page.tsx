@@ -42,7 +42,7 @@ export default async function ContactPage() {
   const offices = await getOffices();
   const settings = await getSettings();
 
-  const primaryPhone = settings?.phone || "+880 1898-898850";
+  const primaryPhone = settings?.phone || "+8801709634485";
   const primaryEmail = settings?.email || "info@hopeglobalacademy.co.uk";
 
   const breadcrumbs = [

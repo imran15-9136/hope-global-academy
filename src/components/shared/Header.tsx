@@ -19,7 +19,7 @@ export async function Header() {
   const siteName = settings?.siteName || "Hope Global Academy";
   
   const headOffice = offices.find((o: any) => o.isHeadOffice);
-  const headPhone = headOffice?.phone || settings?.phone || "+880 1700-000000";
+  const headPhone = headOffice?.phone || settings?.phone || "+8801709634485";
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md transition-all">
@@ -27,7 +27,7 @@ export async function Header() {
         <Link href="/" className="flex items-center gap-2 group">
           <Image
             src={logoSrc}
-            alt={`${siteName} Logo`}
+            alt={`${siteName} - Premier Study Abroad & University Admissions Consultancy`}
             width={160}
             height={48}
             className="h-10 w-auto object-contain transition-transform group-hover:scale-[1.02]"
