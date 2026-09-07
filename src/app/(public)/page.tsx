@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/constants";
 import { Hero } from "@/components/public/Hero";
 import { Destinations } from "@/components/public/Destinations";
 import { Courses } from "@/components/public/Courses";
@@ -9,7 +11,23 @@ import { getSettings } from "@/actions/setting";
 import { getCourses } from "@/actions/course";
 import { getInstitutes } from "@/actions/institute";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
+
+export const metadata: Metadata = {
+  title: "Study Abroad Consultancy & Higher Education Admissions",
+  description:
+    "Premier education consultancy in Bangladesh & UK. Access top universities in the UK, USA, Australia, and Canada with expert visa and scholarship guidance.",
+  alternates: {
+    canonical: SITE_URL,
+  },
+  openGraph: {
+    title: "Study Abroad Consultancy & Higher Education Admissions | Hope Global Academy",
+    description:
+      "Premier education consultancy in Bangladesh & UK. Access top universities in the UK, USA, Australia, and Canada with expert visa and scholarship guidance.",
+    url: SITE_URL,
+    type: "website",
+  },
+};
 
 export default async function Home() {
   let destinations: any[] = [];

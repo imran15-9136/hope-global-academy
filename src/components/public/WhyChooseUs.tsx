@@ -155,9 +155,9 @@ export function WhyChooseUs({ settings }: { settings?: SettingsProps }) {
                   <div className="w-16 h-16 rounded-full bg-primary/40 border border-primary/50 flex items-center justify-center mb-4 text-white">
                     <Video className="w-8 h-8 text-accent" />
                   </div>
-                  <h4 className="text-lg font-bold text-white mb-2">
+                  <h3 className="text-lg font-bold text-white mb-2">
                     Hope Global Academy Story
-                  </h4>
+                  </h3>
                   <p className="text-xs text-slate-300 max-w-sm">
                     Watch how we help thousands of international students fulfill their dreams of studying abroad.
                   </p>

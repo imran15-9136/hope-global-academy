@@ -4,39 +4,58 @@ import { getSettings } from "@/actions/setting";
 import { BranchList } from "@/components/public/BranchList";
 import { AppointmentForm } from "@/components/public/AppointmentForm";
 import { MapPin, Phone, Mail, Clock, MessageSquare, ShieldCheck, Globe } from "lucide-react";
+import { SITE_URL } from "@/lib/constants";
+import { getBreadcrumbJsonLd } from "@/lib/seo";
+import JsonLd from "@/components/shared/JsonLd";
+
+export const revalidate = 3600; // Revalidate every hour
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
   const siteName = settings?.siteName || "Hope Global Academy";
+  const canonicalUrl = `${SITE_URL}/contact`;
 
   return {
-    title: `Contact Us & Global Branch Offices | ${siteName}`,
+    title: "Contact Us & Global Branch Offices",
     description:
       "Connect with Hope Global Academy's branch offices in Bangladesh, UK, and worldwide. Get personalized counseling, university application support, and visa guidance.",
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title: `Contact Us & Global Branch Offices | ${siteName}`,
       description:
         "Visit or contact our global branch offices for expert guidance on studying abroad.",
+      url: canonicalUrl,
       type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Contact Us & Global Branch Offices | ${siteName}`,
+      description:
+        "Visit or contact our global branch offices for expert guidance on studying abroad.",
     },
   };
 }
-
-export const revalidate = 3600; // Revalidate every hour
 
 export default async function ContactPage() {
   const offices = await getOffices();
   const settings = await getSettings();
 
-  const primaryPhone = settings?.phone || "+880 1700-000000";
-  const primaryEmail = settings?.email || "info@hopeglobalacademy.com";
+  const primaryPhone = settings?.phone || "+880 1898-898850";
+  const primaryEmail = settings?.email || "info@hopeglobalacademy.co.uk";
+
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "Contact Us", item: "/contact" },
+  ];
 
   // Generate JSON-LD Structured Data
-  const jsonLd = {
+  const contactJsonLd = {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
     name: "Hope Global Academy",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://hopeglobalacademy.com",
+    url: SITE_URL,
     contactPoint: offices.map((o: any) => ({
       "@type": "ContactPoint",
       telephone: o.phone || primaryPhone,
@@ -52,12 +71,11 @@ export default async function ContactPage() {
     })),
   };
 
+  const schemas = [getBreadcrumbJsonLd(breadcrumbs), contactJsonLd];
+
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={schemas} />
 
       <main className="min-h-screen bg-slate-50/50 pb-20">
         {/* Contact Hero */}

@@ -5,21 +5,45 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DollarSign, Calendar, ShieldCheck, Award, ArrowRight, CheckCircle2, ChevronRight } from "lucide-react";
+import { SITE_URL } from "@/lib/constants";
+import { getBreadcrumbJsonLd } from "@/lib/seo";
+import JsonLd from "@/components/shared/JsonLd";
+import type { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  try {
+    await connectToDatabase();
+    const destinations = await Destination.find({ published: true }).select("slug").lean();
+    return (destinations as Array<{ slug: string }>).map((d) => ({
+      slug: d.slug,
+    }));
+  } catch (error) {
+    console.error("Error in generateStaticParams for destinations:", error);
+    return [];
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const { slug } = await params;
   const decoded = decodeURIComponent(slug);
   const normalizedSlug = decoded.toLowerCase().trim().replace(/\s+/g, "-");
 
   await connectToDatabase();
-  const dbDest = await Destination.findOne({
+  const dbDest: any = await Destination.findOne({
     $or: [{ slug: normalizedSlug }, { slug: decoded }, { slug: slug }],
     published: true,
   }).lean();
 
   if (!dbDest) {
     return {
-      title: "Destination Not Found | Hope Global Academy",
+      title: "Destination Not Found",
+      robots: { index: false, follow: false },
     };
   }
 
@@ -27,10 +51,34 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const description =
     dbDest.shortDescription ||
     `Complete guide to higher education, tuition fees, entry requirements, and visas in ${name}.`;
+  const canonicalUrl = `${SITE_URL}/study-in/${dbDest.slug || normalizedSlug}`;
 
   return {
-    title: `Study in ${name} | Hope Global Academy`,
+    title: `Study in ${name}`,
     description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: `Study in ${name} | Hope Global Academy`,
+      description,
+      url: canonicalUrl,
+      type: "article",
+      images: dbDest.image
+        ? [
+            {
+              url: dbDest.image,
+              alt: `Study in ${name}`,
+            },
+          ]
+        : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Study in ${name} | Hope Global Academy`,
+      description,
+      images: dbDest.image ? [dbDest.image] : undefined,
+    },
   };
 }
 
@@ -55,6 +103,12 @@ export default async function StudyInCountryPage({ params }: { params: Promise<{
   dest.name = decodeURIComponent(dest.name)
     .replace(/%20/g, " ")
     .replace(/\b\w/g, (c) => c.toUpperCase());
+
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "Destinations", item: "/#destinations" },
+    { name: `Study in ${dest.name}`, item: `/study-in/${dest.slug || normalizedSlug}` },
+  ];
 
   // Default highlights fallback if highlights array is empty
   const displayHighlights =
@@ -81,6 +135,7 @@ export default async function StudyInCountryPage({ params }: { params: Promise<{
 
   return (
     <>
+      <JsonLd data={getBreadcrumbJsonLd(breadcrumbs)} />
       {/* Banner */}
       <section className="relative bg-slate-900 text-white py-20 lg:py-24 overflow-hidden">
         <div className="absolute inset-0 opacity-25">
@@ -89,6 +144,7 @@ export default async function StudyInCountryPage({ params }: { params: Promise<{
               src={dest.image}
               alt={`Study in ${dest.name}`}
               fill
+              sizes="100vw"
               className="object-cover"
               priority
             />
@@ -98,8 +154,8 @@ export default async function StudyInCountryPage({ params }: { params: Promise<{
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 z-10">
           <div className="max-w-3xl space-y-5">
-            {/* Breadcrumb */}
-            <div className="flex items-center gap-2 text-xs text-slate-400 font-medium">
+            {/* Breadcrumb Visual Navigation */}
+            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-slate-400 font-medium">
               <Link href="/" className="hover:text-white transition-colors">
                 Home
               </Link>
@@ -109,7 +165,7 @@ export default async function StudyInCountryPage({ params }: { params: Promise<{
               </Link>
               <ChevronRight className="h-3 w-3" />
               <span className="text-amber-400">{dest.name}</span>
-            </div>
+            </nav>
 
             <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-600/30 border border-blue-400/40 px-3.5 py-1 text-xs font-semibold text-blue-300 uppercase tracking-wider">
               <Award className="h-3.5 w-3.5 text-accent" />
@@ -143,9 +199,10 @@ export default async function StudyInCountryPage({ params }: { params: Promise<{
         </div>
       </section>
 
-      {/* Quick Stats Grid */}
+      {/* Quick Stats Grid with Semantic H2 */}
       <section className="py-12 bg-slate-50 border-b border-slate-200">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="sr-only">Key Statistics and Academic Information for {dest.name}</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm space-y-2">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
@@ -239,7 +296,7 @@ export default async function StudyInCountryPage({ params }: { params: Promise<{
             </div>
 
             {/* Sidebar Box */}
-            <div className="lg:col-span-4 space-y-6">
+            <aside aria-label="Quick Application Summary" className="lg:col-span-4 space-y-6">
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 space-y-5">
                 <h3 className="text-lg font-bold text-slate-900 border-b border-slate-200 pb-3">
                   Quick Application Summary
@@ -264,7 +321,7 @@ export default async function StudyInCountryPage({ params }: { params: Promise<{
                   </div>
                 </div>
               </div>
-            </div>
+            </aside>
           </div>
         </div>
       </section>
@@ -274,3 +331,4 @@ export default async function StudyInCountryPage({ params }: { params: Promise<{
     </>
   );
 }
+

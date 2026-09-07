@@ -20,8 +20,8 @@ export async function Footer() {
   // Find the office marked as Head Office
   const headOffice = offices.find((o: any) => o.isHeadOffice);
   const headAddress = headOffice?.address || "Gulshan 2, Dhaka 1212, Bangladesh";
-  const headPhone = headOffice?.phone || settings?.phone || "+880 1700-000000";
-  const headEmail = headOffice?.email || settings?.email || "info@hopeglobalacademy.com";
+  const headPhone = headOffice?.phone || settings?.phone || "+880 1898-898850";
+  const headEmail = headOffice?.email || settings?.email || "info@hopeglobalacademy.co.uk";
 
   // Fallback destinations in case db is empty or error occurs
   const displayDestinations = destinations.length > 0 ? destinations : [
@@ -119,23 +119,11 @@ export async function Footer() {
         <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
             <p>© {new Date().getFullYear()} {siteName}. All rights reserved.</p>
-            {/* <span className="hidden sm:inline text-slate-700">|</span>
-            <p>
-              Developed by:{" "}
-              <a
-                href="https://innovtec.it.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium text-accent hover:underline transition-colors"
-              >
-                Innovtec
-              </a>
-            </p> */}
           </div>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-slate-400 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-slate-400 transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-slate-400 transition-colors">Sitemap</a>
+            <Link href="/contact" className="hover:text-slate-400 transition-colors">Contact Support</Link>
+            <Link href="/services" className="hover:text-slate-400 transition-colors">Services</Link>
+            <Link href="/sitemap.xml" className="hover:text-slate-400 transition-colors">Sitemap</Link>
           </div>
         </div>
       </div>

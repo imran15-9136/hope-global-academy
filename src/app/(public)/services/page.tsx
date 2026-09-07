@@ -3,63 +3,65 @@ import { getServices, getServicesVideo } from "@/actions/service";
 import { getSettings } from "@/actions/setting";
 import { ServiceArtwork } from "@/components/public/ServiceArtwork";
 import { AppointmentForm } from "@/components/public/AppointmentForm";
-import { Sparkles, CheckCircle2, Video, ArrowRight, ShieldCheck, GraduationCap, HeartHandshake } from "lucide-react";
-import Link from "next/link";
-
+import { Sparkles, CheckCircle2, ShieldCheck, GraduationCap, HeartHandshake } from "lucide-react";
 import { ServiceVideoPlayer } from "@/components/public/ServiceVideoPlayer";
+import { SITE_URL } from "@/lib/constants";
+import { getBreadcrumbJsonLd, getOfferCatalogJsonLd } from "@/lib/seo";
+import JsonLd from "@/components/shared/JsonLd";
+
+export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
   const siteName = settings?.siteName || "Hope Global Academy";
+  const canonicalUrl = `${SITE_URL}/services`;
 
   return {
-    title: `Our Higher Education Services | ${siteName}`,
+    title: "Our Higher Education Services",
     description:
       "Explore Hope Global Academy's 7 core services: Profile Assessment, Career Guidance, Visa Application, University Application, Interview Prep, Accommodation, and Pre/Post Departure briefing.",
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title: `Our Higher Education Services | ${siteName}`,
       description:
         "Comprehensive, end-to-end guidance for studying in top universities in the UK, USA, Australia, and Canada.",
+      url: canonicalUrl,
       type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Our Higher Education Services | ${siteName}`,
+      description:
+        "Comprehensive, end-to-end guidance for studying in top universities in the UK, USA, Australia, and Canada.",
     },
   };
 }
-
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
 
 export default async function ServicesPage() {
   const services = await getServices();
   const videoData = await getServicesVideo();
   const settings = await getSettings();
 
-  // Generate JSON-LD Structured Data
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    name: "Hope Global Academy",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://hopeglobalacademy.com",
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: "Higher Education Consulting Services",
-      itemListElement: services.map((s: any, idx: number) => ({
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: s.title,
-          description: s.description,
-        },
-        position: idx + 1,
-      })),
-    },
-  };
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "Services", item: "/services" },
+  ];
+
+  const offerCatalogSchema = getOfferCatalogJsonLd(
+    services.map((s: any) => ({
+      title: s.title,
+      description: s.description || s.shortDescription || "",
+      url: `${SITE_URL}/services`,
+    }))
+  );
+
+  const schemas = [getBreadcrumbJsonLd(breadcrumbs), offerCatalogSchema];
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={schemas} />
 
       <main className="min-h-screen bg-slate-50/50 pb-20">
         {/* Services Hero Header */}

@@ -2,17 +2,76 @@ import { connectToDatabase } from "@/lib/db";
 import Blog from "@/models/Blog";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { Calendar, Tag } from "lucide-react";
+import Link from "next/link";
+import { Calendar, Tag, ChevronRight } from "lucide-react";
+import { SITE_URL } from "@/lib/constants";
+import { getBlogPostingJsonLd, getBreadcrumbJsonLd } from "@/lib/seo";
+import JsonLd from "@/components/shared/JsonLd";
+import type { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  try {
+    await connectToDatabase();
+    const blogs = await Blog.find({ published: true }).select("slug").lean();
+    return (blogs as Array<{ slug: string }>).map((b) => ({
+      slug: b.slug,
+    }));
+  } catch (error) {
+    console.error("Error in generateStaticParams for blogs:", error);
+    return [];
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const { slug } = await params;
   await connectToDatabase();
-  const blog = await Blog.findOne({ slug, published: true }).lean();
-  if (!blog) return { title: "Article Not Found" };
+  const blog: any = await Blog.findOne({ slug, published: true }).lean();
+
+  if (!blog) {
+    return {
+      title: "Article Not Found",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const title = blog.seoTitle || blog.title;
+  const description = blog.seoDescription || blog.excerpt || blog.title;
+  const canonicalUrl = `${SITE_URL}/blog/${blog.slug}`;
 
   return {
-    title: `${blog.seoTitle || blog.title} | Hope Global Academy`,
-    description: blog.seoDescription || blog.excerpt,
+    title,
+    description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: `${title} | Hope Global Academy`,
+      description,
+      url: canonicalUrl,
+      type: "article",
+      publishedTime: blog.createdAt ? new Date(blog.createdAt).toISOString() : undefined,
+      modifiedTime: blog.updatedAt ? new Date(blog.updatedAt).toISOString() : undefined,
+      images: blog.coverImage
+        ? [
+            {
+              url: blog.coverImage,
+              alt: blog.title,
+            },
+          ]
+        : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | Hope Global Academy`,
+      description,
+      images: blog.coverImage ? [blog.coverImage] : undefined,
+    },
   };
 }
 
@@ -27,9 +86,41 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   const blog = JSON.parse(JSON.stringify(rawBlog));
 
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "Blog", item: "/blog" },
+    { name: blog.title, item: `/blog/${blog.slug}` },
+  ];
+
+  const blogPostSchema = getBlogPostingJsonLd({
+    title: blog.title,
+    description: blog.excerpt || blog.title,
+    url: `${SITE_URL}/blog/${blog.slug}`,
+    image: blog.coverImage,
+    datePublished: new Date(blog.createdAt).toISOString(),
+    dateModified: blog.updatedAt ? new Date(blog.updatedAt).toISOString() : undefined,
+    authorName: blog.author || "Hope Global Academy",
+  });
+
+  const schemas = [getBreadcrumbJsonLd(breadcrumbs), blogPostSchema];
+
   return (
     <div className="py-16">
+      <JsonLd data={schemas} />
       <article className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-8">
+        {/* Visual Breadcrumbs */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-slate-500 font-medium">
+          <Link href="/" className="hover:text-primary transition-colors">
+            Home
+          </Link>
+          <ChevronRight className="h-3 w-3" />
+          <Link href="/blog" className="hover:text-primary transition-colors">
+            Blog
+          </Link>
+          <ChevronRight className="h-3 w-3" />
+          <span className="text-slate-900 truncate max-w-xs">{blog.title}</span>
+        </nav>
+
         <div className="space-y-4 text-center">
           <div className="flex items-center justify-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
             <Calendar className="h-3.5 w-3.5" />
@@ -43,7 +134,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {blog.coverImage && (
           <div className="relative aspect-video overflow-hidden rounded-2xl bg-slate-100 shadow-elevation">
-            <Image src={blog.coverImage} alt={blog.title} fill className="object-cover" priority />
+            <Image
+              src={blog.coverImage}
+              alt={blog.title}
+              fill
+              sizes="(max-width: 1024px) 100vw, 896px"
+              className="object-cover"
+              priority
+            />
           </div>
         )}
 
@@ -70,3 +168,4 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     </div>
   );
 }
+

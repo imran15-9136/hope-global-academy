@@ -1,3 +1,5 @@
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://hopeglobalacademy.co.uk";
+
 export interface CourseLevelOption {
   id: number;
   name: string;

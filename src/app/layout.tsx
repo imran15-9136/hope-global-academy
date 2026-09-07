@@ -1,8 +1,12 @@
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import fs from "fs";
 import path from "path";
+import { SITE_URL } from "@/lib/constants";
+import { getOrganizationJsonLd, getWebSiteJsonLd } from "@/lib/seo";
+import JsonLd from "@/components/shared/JsonLd";
 
 // Auto-cleanup duplicate admin directory outside route group
 try {
@@ -21,9 +25,64 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Hope Global Academy | Premium Study Abroad Consultation",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Hope Global Academy | Premium Study Abroad Consultation",
+    template: "%s | Hope Global Academy",
+  },
   description:
     "Expert guidance for higher education in UK, USA, Australia, and Canada. Book a free appointment with Hope Global Academy counselors today.",
+  keywords: [
+    "Study Abroad Consultancy",
+    "Higher Education UK",
+    "Study in Australia",
+    "Study in Canada",
+    "Study in USA",
+    "Student Visa Advisory",
+    "Hope Global Academy",
+    "University Admissions",
+  ],
+  authors: [{ name: "Hope Global Academy", url: SITE_URL }],
+  creator: "Hope Global Academy",
+  publisher: "Hope Global Academy",
+  alternates: {
+    canonical: "./",
+  },
+  openGraph: {
+    title: "Hope Global Academy | Premium Study Abroad Consultation",
+    description:
+      "Expert guidance for higher education in UK, USA, Australia, and Canada. Book a free appointment with Hope Global Academy counselors today.",
+    url: SITE_URL,
+    siteName: "Hope Global Academy",
+    locale: "en_GB",
+    type: "website",
+    images: [
+      {
+        url: `${SITE_URL}/logo.png`,
+        width: 1200,
+        height: 630,
+        alt: "Hope Global Academy - Global Higher Education Consultancy",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hope Global Academy | Premium Study Abroad Consultation",
+    description:
+      "Expert guidance for higher education in UK, USA, Australia, and Canada. Book a free appointment with Hope Global Academy counselors today.",
+    images: [`${SITE_URL}/logo.png`],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -31,11 +90,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const rootSchemas = [getOrganizationJsonLd(), getWebSiteJsonLd()];
+
   return (
     <html lang="en" className={inter.variable}>
       <body className="min-h-screen bg-background font-sans antialiased text-slate-900 selection:bg-primary-light selection:text-primary">
+        <JsonLd data={rootSchemas} />
         {children}
       </body>
     </html>
   );
 }
+

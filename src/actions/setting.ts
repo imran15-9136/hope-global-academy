@@ -71,8 +71,8 @@ export async function getSettings() {
 
   const newSetting = await Setting.create({
     siteName: "Hope Global Academy",
-    phone: "+880 1700-000000",
-    email: "info@hopeglobalacademy.com",
+    phone: "+880 1898-898850",
+    email: "info@hopeglobalacademy.co.uk",
     whatsapp: "+8801700000000",
     heroTitle: "Your Global Future Starts At Hope Global",
     heroSubtitle: "We guide ambitious students to study in top universities across the UK, USA, Australia, and Canada.",
